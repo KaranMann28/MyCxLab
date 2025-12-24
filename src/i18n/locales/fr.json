@@ -77,5 +77,129 @@
   "ui": {
     "keyFinding": "Decouverte Cle",
     "methodology": "Methodologie"
+  },
+  "insights": {
+    "hero": {
+      "badge": "CX Lab Intelligence",
+      "title": "Des Insights Actionnables Au-dela du",
+      "titleHighlight": "Reporting Standard",
+      "subtitle": "Analyses BigQuery en temps reel pour des decisions CX basees sur les donnees"
+    },
+    "kpi": {
+      "ytdSavings": {
+        "title": "Economies Automatisation YTD",
+        "subtitle": "Couts evites grace a l'IA",
+        "trend": "vs manuel"
+      },
+      "gmvInfluenced": {
+        "title": "GMV Influencee",
+        "subtitle": "Impact revenu YTD",
+        "trend": "2025 YTD"
+      },
+      "handoverRate": {
+        "title": "Taux de Transfert",
+        "subtitle": "Marge d'optimisation",
+        "trend": "objectif: <20%"
+      },
+      "csatAlerts": {
+        "title": "Alertes CSAT",
+        "subtitle": "Intentions a surveiller",
+        "trend": "surveillance"
+      },
+      "p1Priority": {
+        "title": "Intentions Priorite P1",
+        "subtitle": "Action immediate requise",
+        "trend": "impact eleve"
+      },
+      "resolutionRate": {
+        "title": "Taux Resolution Moyen",
+        "subtitle": "Couverture IA par bande GMV",
+        "trend": "en amelioration"
+      }
+    },
+    "sections": {
+      "automation": {
+        "title": "ROI Automatisation & Impact Couts",
+        "subtitle": "Quantifier l'impact financier de l'automatisation IA",
+        "badge": "INSIGHT UNIQUE",
+        "chartTitle": "Economies Mensuelles d'Automatisation",
+        "chartDescription": "Suivez les economies de couts entre tickets resolus par IA vs humains au fil du temps."
+      },
+      "handover": {
+        "title": "Fuite de Couts des Transferts",
+        "subtitle": "Identifier les pertes d'efficacite dans le pipeline d'automatisation",
+        "badge": "IMPACT COUTS",
+        "chartTitle": "Taux de Transfert & Surcout",
+        "chartDescription": "Chaque transfert coute 4,50$ de plus qu'une resolution entierement automatisee."
+      },
+      "csat": {
+        "title": "Systeme d'Alerte Precoce CSAT",
+        "subtitle": "Detecter les tendances de satisfaction avant qu'elles ne deviennent problematiques",
+        "badge": "PREDICTIF",
+        "chartTitle": "Analyse des Tendances par Intention (14 jours glissants)",
+        "chartDescription": "Identifiez les tendances CSAT en baisse avant qu'elles ne deviennent critiques."
+      },
+      "priority": {
+        "title": "Matrice de Priorite Formation IA",
+        "subtitle": "Priorisation basee sur les donnees pour maximiser le ROI des ameliorations",
+        "badge": "ACTIONNABLE",
+        "chartTitle": "Score de Priorite Volume vs CSAT",
+        "chartDescription": "Intentions scorees en combinant percentile de volume + besoin d'amelioration CSAT."
+      },
+      "revenue": {
+        "title": "Impact Revenu de l'IA",
+        "subtitle": "Mesurer la contribution directe de l'IA aux resultats business",
+        "badge": "VALEUR BUSINESS",
+        "chartTitle": "GMV Influencee par l'Assistant Shopping IA",
+        "chartDescription": "Revenu influence lorsque les interactions IA ont lieu dans les 24h avant l'achat."
+      },
+      "channel": {
+        "title": "Comparaison ROI par Canal",
+        "subtitle": "Optimiser l'allocation des ressources entre les canaux de support",
+        "badge": "EFFICACITE",
+        "chartTitle": "Part de Volume vs Part de Cout par Canal",
+        "chartDescription": "Les canaux ou la part de volume depasse la part de cout sont rentables."
+      }
+    },
+    "methodology": {
+      "toggle": "Pourquoi c'est important & Methodologie",
+      "whyMatters": "Pourquoi c'est important",
+      "methodologyLabel": "Methodologie",
+      "dataSource": "Source de donnees",
+      "automation": {
+        "whyMatters": "Comprendre les economies de couts valide l'investissement IA et identifie les opportunites d'optimisation.",
+        "methodology": "Modele de couts: Humain = 5$/ticket, Automatise = 0,50$/ticket, Transfert = 3,50$/ticket. Base sur les benchmarks industrie et l'analyse des couts internes.",
+        "dataSource": "BigQuery: MonthlyTicketHandlingEvolutionsince2024"
+      },
+      "handover": {
+        "whyMatters": "Chaque transfert represente une perte d'efficacite. Reduire les transferts ameliore directement les marges.",
+        "methodology": "Surcout de transfert calcule a 4,50$ par ticket (difference entre les couts de resolution humaine et automatisee).",
+        "dataSource": "BigQuery: AIAgentTicketHandovervsFullyAutomatedTickets"
+      },
+      "csat": {
+        "whyMatters": "La detection precoce du declin CSAT permet une intervention proactive avant l'attrition client.",
+        "methodology": "Comparaison glissante sur 14 jours: moyenne semaine actuelle vs semaine precedente. Seuil de declin: -0,2 points.",
+        "dataSource": "BigQuery: AIAgentCSATbyTicketIntentRolling7Day"
+      },
+      "priority": {
+        "whyMatters": "Concentrer la formation IA sur les zones a fort impact pour maximiser le ROI des ameliorations.",
+        "methodology": "Score de Priorite = (Percentile Volume + Besoin Amelioration CSAT) / 2. Seuil P1: score >= 75.",
+        "dataSource": "BigQuery: AIAgentCSATbyTicketIntentRolling7Day, DistinctIntent"
+      },
+      "revenue": {
+        "whyMatters": "Quantifie la contribution de l'IA au chiffre d'affaires, prouvant sa valeur strategique.",
+        "methodology": "GMV attribuee lorsqu'une interaction IA a lieu dans les 24 heures avant l'achat.",
+        "dataSource": "BigQuery: TotalRevenueInfluencedandTotalGMVin2025"
+      },
+      "channel": {
+        "whyMatters": "L'analyse d'efficacite par canal guide l'allocation des ressources et les decisions d'investissement.",
+        "methodology": "Comparaison part de volume vs part de cout. Les canaux efficients ont une part de volume superieure a leur part de cout.",
+        "dataSource": "BigQuery: SupportInquiriesbyIntentandChannel"
+      }
+    },
+    "dataNote": {
+      "label": "Source de Donnees",
+      "text": "Analyses BigQuery en temps reel de Gorgias CX Lab • Derniere mise a jour: Decembre 2025"
+    }
   }
 }

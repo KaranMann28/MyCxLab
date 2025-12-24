@@ -77,5 +77,129 @@
   "ui": {
     "keyFinding": "Key Finding",
     "methodology": "Methodology"
+  },
+  "insights": {
+    "hero": {
+      "badge": "CX Lab Intelligence",
+      "title": "Actionable Insights Beyond",
+      "titleHighlight": "Standard Reporting",
+      "subtitle": "Real-time BigQuery analytics powering data-driven CX decisions"
+    },
+    "kpi": {
+      "ytdSavings": {
+        "title": "YTD Automation Savings",
+        "subtitle": "Cost avoided through AI",
+        "trend": "vs manual"
+      },
+      "gmvInfluenced": {
+        "title": "GMV Influenced",
+        "subtitle": "Revenue impact YTD",
+        "trend": "2025 YTD"
+      },
+      "handoverRate": {
+        "title": "Handover Rate",
+        "subtitle": "Room for optimization",
+        "trend": "target: <20%"
+      },
+      "csatAlerts": {
+        "title": "CSAT Alerts",
+        "subtitle": "Intents need attention",
+        "trend": "monitoring"
+      },
+      "p1Priority": {
+        "title": "P1 Priority Intents",
+        "subtitle": "Immediate focus needed",
+        "trend": "high impact"
+      },
+      "resolutionRate": {
+        "title": "Avg Resolution Rate",
+        "subtitle": "AI coverage across GMV bands",
+        "trend": "improving"
+      }
+    },
+    "sections": {
+      "automation": {
+        "title": "Automation ROI & Cost Impact",
+        "subtitle": "Quantifying the financial impact of AI automation",
+        "badge": "UNIQUE INSIGHT",
+        "chartTitle": "Monthly Automation Savings",
+        "chartDescription": "Track cost savings from AI-resolved vs human-resolved tickets over time."
+      },
+      "handover": {
+        "title": "Handover Cost Leakage",
+        "subtitle": "Identifying efficiency losses in the automation pipeline",
+        "badge": "COST IMPACT",
+        "chartTitle": "Handover Rate & Cost Premium",
+        "chartDescription": "Every handover costs an additional $4.50 vs fully automated resolution."
+      },
+      "csat": {
+        "title": "CSAT Early Warning System",
+        "subtitle": "Detecting satisfaction trends before they become problems",
+        "badge": "PREDICTIVE",
+        "chartTitle": "Intent Trend Analysis (14-day rolling)",
+        "chartDescription": "Identify declining CSAT trends before they become critical."
+      },
+      "priority": {
+        "title": "AI Training Priority Matrix",
+        "subtitle": "Data-driven prioritization for maximum improvement ROI",
+        "badge": "ACTIONABLE",
+        "chartTitle": "Volume vs CSAT Priority Scoring",
+        "chartDescription": "Intents scored by combining volume percentile + CSAT improvement need."
+      },
+      "revenue": {
+        "title": "AI Revenue Impact",
+        "subtitle": "Measuring AI's direct contribution to business outcomes",
+        "badge": "BUSINESS VALUE",
+        "chartTitle": "GMV Influenced by AI Shopping Assistant",
+        "chartDescription": "Revenue influenced when AI interactions occur within 24 hours before purchase."
+      },
+      "channel": {
+        "title": "Channel ROI Comparison",
+        "subtitle": "Optimizing resource allocation across support channels",
+        "badge": "EFFICIENCY",
+        "chartTitle": "Volume Share vs Cost Share by Channel",
+        "chartDescription": "Channels where volume share exceeds cost share are cost-effective."
+      }
+    },
+    "methodology": {
+      "toggle": "Why it matters & Methodology",
+      "whyMatters": "Why it matters",
+      "methodologyLabel": "Methodology",
+      "dataSource": "Data source",
+      "automation": {
+        "whyMatters": "Understanding cost savings validates AI investment and identifies optimization opportunities.",
+        "methodology": "Cost model: Human = $5/ticket, Automated = $0.50/ticket, Handover = $3.50/ticket. Based on industry benchmarks and internal cost analysis.",
+        "dataSource": "BigQuery: MonthlyTicketHandlingEvolutionsince2024"
+      },
+      "handover": {
+        "whyMatters": "Every handover represents lost efficiency. Reducing handovers directly improves margins.",
+        "methodology": "Handover cost premium calculated as $4.50 per ticket (difference between human and automated resolution costs).",
+        "dataSource": "BigQuery: AIAgentTicketHandovervsFullyAutomatedTickets"
+      },
+      "csat": {
+        "whyMatters": "Early detection of CSAT decline enables proactive intervention before customer churn.",
+        "methodology": "14-day rolling comparison: current week vs previous week averages. Decline threshold: -0.2 points.",
+        "dataSource": "BigQuery: AIAgentCSATbyTicketIntentRolling7Day"
+      },
+      "priority": {
+        "whyMatters": "Focus AI training on high-impact areas to maximize improvement ROI.",
+        "methodology": "Priority Score = (Volume Percentile + CSAT Improvement Need) / 2. P1 threshold: score >= 75.",
+        "dataSource": "BigQuery: AIAgentCSATbyTicketIntentRolling7Day, DistinctIntent"
+      },
+      "revenue": {
+        "whyMatters": "Quantifies AI contribution to business revenue, proving strategic value.",
+        "methodology": "GMV attributed when AI interaction occurs within 24 hours before purchase.",
+        "dataSource": "BigQuery: TotalRevenueInfluencedandTotalGMVin2025"
+      },
+      "channel": {
+        "whyMatters": "Channel efficiency analysis guides resource allocation and investment decisions.",
+        "methodology": "Volume share vs cost share comparison. Efficient channels have higher volume share than cost share.",
+        "dataSource": "BigQuery: SupportInquiriesbyIntentandChannel"
+      }
+    },
+    "dataNote": {
+      "label": "Data Source",
+      "text": "Real-time BigQuery analytics from Gorgias CX Lab • Last updated: December 2025"
+    }
   }
 }

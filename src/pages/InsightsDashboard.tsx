@@ -1,5 +1,6 @@
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
 import { useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Header, Footer, Container } from '@/components/layout'
 import {
   AutomationSavingsChart,
@@ -48,40 +49,6 @@ const sectionVariants = {
       stiffness: 70,
       damping: 18,
     },
-  },
-}
-
-// Insight metadata with "Why it matters" and methodology
-const insightMeta = {
-  automation: {
-    whyMatters: 'Understanding cost savings validates AI investment and identifies optimization opportunities.',
-    methodology: 'Cost model: Human = $5/ticket, Automated = $0.50/ticket, Handover = $3.50/ticket. Based on industry benchmarks and internal cost analysis.',
-    dataSource: 'BigQuery: MonthlyTicketHandlingEvolutionsince2024',
-  },
-  handover: {
-    whyMatters: 'Every handover represents lost efficiency. Reducing handovers directly improves margins.',
-    methodology: 'Handover cost premium calculated as $4.50 per ticket (difference between human and automated resolution costs).',
-    dataSource: 'BigQuery: AIAgentTicketHandovervsFullyAutomatedTickets',
-  },
-  csat: {
-    whyMatters: 'Early detection of CSAT decline enables proactive intervention before customer churn.',
-    methodology: '14-day rolling comparison: current week vs previous week averages. Decline threshold: -0.2 points.',
-    dataSource: 'BigQuery: AIAgentCSATbyTicketIntentRolling7Day',
-  },
-  priority: {
-    whyMatters: 'Focus AI training on high-impact areas to maximize improvement ROI.',
-    methodology: 'Priority Score = (Volume Percentile + CSAT Improvement Need) / 2. P1 threshold: score >= 75.',
-    dataSource: 'BigQuery: AIAgentCSATbyTicketIntentRolling7Day, DistinctIntent',
-  },
-  revenue: {
-    whyMatters: 'Quantifies AI contribution to business revenue, proving strategic value.',
-    methodology: 'GMV attributed when AI interaction occurs within 24 hours before purchase.',
-    dataSource: 'BigQuery: TotalRevenueInfluencedandTotalGMVin2025',
-  },
-  channel: {
-    whyMatters: 'Channel efficiency analysis guides resource allocation and investment decisions.',
-    methodology: 'Volume share vs cost share comparison. Efficient channels have higher volume share than cost share.',
-    dataSource: 'BigQuery: SupportInquiriesbyIntentandChannel',
   },
 }
 
@@ -191,12 +158,19 @@ function MethodologyPanel({
   dataSource,
   isOpen,
   onToggle,
+  labels,
 }: {
   whyMatters: string
   methodology: string
   dataSource: string
   isOpen: boolean
   onToggle: () => void
+  labels: {
+    toggle: string
+    whyMattersLabel: string
+    methodologyLabel: string
+    dataSourceLabel: string
+  }
 }) {
   return (
     <div className={styles.methodologyWrapper}>
@@ -213,7 +187,7 @@ function MethodologyPanel({
         >
           +
         </motion.span>
-        <span>Why it matters & Methodology</span>
+        <span>{labels.toggle}</span>
         <motion.span
           className={styles.methodologyChevron}
           animate={{ rotate: isOpen ? 180 : 0 }}
@@ -242,15 +216,15 @@ function MethodologyPanel({
               transition={{ delay: 0.1, duration: 0.2 }}
             >
               <div className={styles.methodologyItem}>
-                <div className={styles.methodologyLabel}>Why it matters</div>
+                <div className={styles.methodologyLabel}>{labels.whyMattersLabel}</div>
                 <div className={styles.methodologyText}>{whyMatters}</div>
               </div>
               <div className={styles.methodologyItem}>
-                <div className={styles.methodologyLabel}>Methodology</div>
+                <div className={styles.methodologyLabel}>{labels.methodologyLabel}</div>
                 <div className={styles.methodologyText}>{methodology}</div>
               </div>
               <div className={styles.methodologyItem}>
-                <div className={styles.methodologyLabel}>Data source</div>
+                <div className={styles.methodologyLabel}>{labels.dataSourceLabel}</div>
                 <div className={styles.methodologyText}>{dataSource}</div>
               </div>
             </motion.div>
@@ -261,19 +235,27 @@ function MethodologyPanel({
   )
 }
 
-// Enhanced Chart Card with methodology
+// Enhanced Chart Card with methodology and collapsible chart
 function ChartCard({
   title,
   description,
   children,
   meta,
+  labels,
 }: {
   title: string
   description: string
   children: React.ReactNode
   meta: { whyMatters: string; methodology: string; dataSource: string }
+  labels: {
+    toggle: string
+    whyMattersLabel: string
+    methodologyLabel: string
+    dataSourceLabel: string
+  }
 }) {
   const [methodologyOpen, setMethodologyOpen] = useState(false)
+  const [chartExpanded, setChartExpanded] = useState(true)
 
   return (
     <motion.div
@@ -282,50 +264,89 @@ function ChartCard({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-40px' }}
       transition={{ type: 'spring', stiffness: 80, damping: 18 }}
+      layout
     >
-      <div className={styles.chartHeader}>
-        <motion.h3
-          className={styles.chartTitle}
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.15 }}
-        >
-          {title}
-        </motion.h3>
-        <motion.p
-          className={styles.chartDescription}
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.25 }}
-        >
-          {description}
-        </motion.p>
-      </div>
-
       <motion.div
-        className={styles.chartContent}
-        initial={{ opacity: 0, scale: 0.98 }}
-        whileInView={{ opacity: 1, scale: 1 }}
-        viewport={{ once: true }}
-        transition={{ delay: 0.35, duration: 0.4 }}
+        className={styles.chartHeader}
+        onClick={() => setChartExpanded(!chartExpanded)}
+        style={{ cursor: 'pointer' }}
+        whileHover={{ backgroundColor: 'rgba(0, 0, 0, 0.02)' }}
+        layout
       >
-        {children}
+        <div className={styles.chartHeaderContent}>
+          <motion.h3
+            className={styles.chartTitle}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.15 }}
+            layout
+          >
+            {title}
+          </motion.h3>
+          <motion.p
+            className={styles.chartDescription}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.25 }}
+            layout
+          >
+            {description}
+          </motion.p>
+        </div>
+        <motion.button
+          className={styles.chartCollapseBtn}
+          animate={{ rotate: chartExpanded ? 0 : -90 }}
+          transition={{ duration: 0.2 }}
+          onClick={(e) => {
+            e.stopPropagation()
+            setChartExpanded(!chartExpanded)
+          }}
+        >
+          <span className={styles.collapseIcon}>▼</span>
+        </motion.button>
       </motion.div>
 
-      <MethodologyPanel
-        whyMatters={meta.whyMatters}
-        methodology={meta.methodology}
-        dataSource={meta.dataSource}
-        isOpen={methodologyOpen}
-        onToggle={() => setMethodologyOpen(!methodologyOpen)}
-      />
+      <AnimatePresence initial={false}>
+        {chartExpanded && (
+          <motion.div
+            className={styles.chartCollapsible}
+            initial="collapsed"
+            animate="open"
+            exit="collapsed"
+            variants={{
+              open: { opacity: 1, height: 'auto' },
+              collapsed: { opacity: 0, height: 0 }
+            }}
+            transition={{ duration: 0.4, ease: [0.04, 0.62, 0.23, 0.98] }}
+          >
+            <motion.div
+              className={styles.chartContent}
+              initial={{ opacity: 0, scale: 0.98 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.1, duration: 0.3 }}
+            >
+              {children}
+            </motion.div>
+
+            <MethodologyPanel
+              whyMatters={meta.whyMatters}
+              methodology={meta.methodology}
+              dataSource={meta.dataSource}
+              isOpen={methodologyOpen}
+              onToggle={() => setMethodologyOpen(!methodologyOpen)}
+              labels={labels}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.div>
   )
 }
 
 export function InsightsDashboard() {
+  const { t } = useTranslation()
   const containerRef = useRef<HTMLDivElement>(null)
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -334,6 +355,14 @@ export function InsightsDashboard() {
 
   const backgroundY = useTransform(scrollYProgress, [0, 1], ['0%', '50%'])
   const backgroundOpacity = useTransform(scrollYProgress, [0, 0.5, 1], [0.3, 0.5, 0.3])
+
+  // Methodology labels for translation
+  const methodologyLabels = {
+    toggle: t('insights.methodology.toggle'),
+    whyMattersLabel: t('insights.methodology.whyMatters'),
+    methodologyLabel: t('insights.methodology.methodologyLabel'),
+    dataSourceLabel: t('insights.methodology.dataSource'),
+  }
 
   return (
     <>
@@ -360,7 +389,7 @@ export function InsightsDashboard() {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.1 }}
             >
-              CX Lab Intelligence
+              {t('insights.hero.badge')}
             </motion.div>
             <motion.h1
               className={styles.heroTitle}
@@ -368,9 +397,9 @@ export function InsightsDashboard() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.5 }}
             >
-              Actionable Insights Beyond
+              {t('insights.hero.title')}
               <br />
-              <span className={styles.heroHighlight}>Standard Reporting</span>
+              <span className={styles.heroHighlight}>{t('insights.hero.titleHighlight')}</span>
             </motion.h1>
             <motion.p
               className={styles.heroSubtitle}
@@ -378,7 +407,7 @@ export function InsightsDashboard() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.35, duration: 0.5 }}
             >
-              Real-time BigQuery analytics powering data-driven CX decisions
+              {t('insights.hero.subtitle')}
             </motion.p>
           </motion.div>
 
@@ -390,46 +419,46 @@ export function InsightsDashboard() {
             animate="visible"
           >
             <KPICard
-              title="YTD Automation Savings"
+              title={t('insights.kpi.ytdSavings.title')}
               value={formatCurrency(kpiSummary.ytdSavings, true)}
-              subtitle="Cost avoided through AI"
+              subtitle={t('insights.kpi.ytdSavings.subtitle')}
               color="#10b981"
-              trend={{ direction: 'up', label: 'vs manual' }}
+              trend={{ direction: 'up', label: t('insights.kpi.ytdSavings.trend') }}
             />
             <KPICard
-              title="GMV Influenced"
+              title={t('insights.kpi.gmvInfluenced.title')}
               value={formatCurrency(kpiSummary.ytdGMVInfluenced, true)}
-              subtitle="Revenue impact YTD"
+              subtitle={t('insights.kpi.gmvInfluenced.subtitle')}
               color="#3b82f6"
-              trend={{ direction: 'up', label: '2025 YTD' }}
+              trend={{ direction: 'up', label: t('insights.kpi.gmvInfluenced.trend') }}
             />
             <KPICard
-              title="Handover Rate"
+              title={t('insights.kpi.handoverRate.title')}
               value={`${kpiSummary.currentHandoverRate}%`}
-              subtitle="Room for optimization"
+              subtitle={t('insights.kpi.handoverRate.subtitle')}
               color="#ef4444"
-              trend={{ direction: 'down', label: 'target: <20%' }}
+              trend={{ direction: 'down', label: t('insights.kpi.handoverRate.trend') }}
             />
             <KPICard
-              title="CSAT Alerts"
+              title={t('insights.kpi.csatAlerts.title')}
               value={String(kpiSummary.csatRiskCount)}
-              subtitle="Intents need attention"
+              subtitle={t('insights.kpi.csatAlerts.subtitle')}
               color="#f59e0b"
-              trend={{ direction: 'neutral', label: 'monitoring' }}
+              trend={{ direction: 'neutral', label: t('insights.kpi.csatAlerts.trend') }}
             />
             <KPICard
-              title="P1 Priority Intents"
+              title={t('insights.kpi.p1Priority.title')}
               value={String(kpiSummary.p1IntentCount)}
-              subtitle="Immediate focus needed"
+              subtitle={t('insights.kpi.p1Priority.subtitle')}
               color="#ef4444"
-              trend={{ direction: 'neutral', label: 'high impact' }}
+              trend={{ direction: 'neutral', label: t('insights.kpi.p1Priority.trend') }}
             />
             <KPICard
-              title="Avg Resolution Rate"
+              title={t('insights.kpi.resolutionRate.title')}
               value={`${kpiSummary.avgResolutionRate.toFixed(1)}%`}
-              subtitle="AI coverage across GMV bands"
+              subtitle={t('insights.kpi.resolutionRate.subtitle')}
               color="#8b5cf6"
-              trend={{ direction: 'up', label: 'improving' }}
+              trend={{ direction: 'up', label: t('insights.kpi.resolutionRate.trend') }}
             />
           </motion.div>
 
@@ -442,14 +471,19 @@ export function InsightsDashboard() {
             viewport={{ once: true, margin: '-80px' }}
           >
             <SectionHeader
-              title="Automation ROI & Cost Impact"
-              subtitle="Quantifying the financial impact of AI automation"
-              badge={{ text: 'UNIQUE INSIGHT', color: '#10b981' }}
+              title={t('insights.sections.automation.title')}
+              subtitle={t('insights.sections.automation.subtitle')}
+              badge={{ text: t('insights.sections.automation.badge'), color: '#10b981' }}
             />
             <ChartCard
-              title="Monthly Automation Savings"
-              description="Track cost savings from AI-resolved vs human-resolved tickets over time."
-              meta={insightMeta.automation}
+              title={t('insights.sections.automation.chartTitle')}
+              description={t('insights.sections.automation.chartDescription')}
+              meta={{
+                whyMatters: t('insights.methodology.automation.whyMatters'),
+                methodology: t('insights.methodology.automation.methodology'),
+                dataSource: t('insights.methodology.automation.dataSource'),
+              }}
+              labels={methodologyLabels}
             >
               <AutomationSavingsChart />
             </ChartCard>
@@ -464,14 +498,19 @@ export function InsightsDashboard() {
             viewport={{ once: true, margin: '-80px' }}
           >
             <SectionHeader
-              title="Handover Cost Leakage"
-              subtitle="Identifying efficiency losses in the automation pipeline"
-              badge={{ text: 'COST IMPACT', color: '#ef4444' }}
+              title={t('insights.sections.handover.title')}
+              subtitle={t('insights.sections.handover.subtitle')}
+              badge={{ text: t('insights.sections.handover.badge'), color: '#ef4444' }}
             />
             <ChartCard
-              title="Handover Rate & Cost Premium"
-              description="Every handover costs an additional $4.50 vs fully automated resolution."
-              meta={insightMeta.handover}
+              title={t('insights.sections.handover.chartTitle')}
+              description={t('insights.sections.handover.chartDescription')}
+              meta={{
+                whyMatters: t('insights.methodology.handover.whyMatters'),
+                methodology: t('insights.methodology.handover.methodology'),
+                dataSource: t('insights.methodology.handover.dataSource'),
+              }}
+              labels={methodologyLabels}
             >
               <HandoverAnalysisChart />
             </ChartCard>
@@ -486,14 +525,19 @@ export function InsightsDashboard() {
             viewport={{ once: true, margin: '-80px' }}
           >
             <SectionHeader
-              title="CSAT Early Warning System"
-              subtitle="Detecting satisfaction trends before they become problems"
-              badge={{ text: 'PREDICTIVE', color: '#f59e0b' }}
+              title={t('insights.sections.csat.title')}
+              subtitle={t('insights.sections.csat.subtitle')}
+              badge={{ text: t('insights.sections.csat.badge'), color: '#f59e0b' }}
             />
             <ChartCard
-              title="Intent Trend Analysis (14-day rolling)"
-              description="Identify declining CSAT trends before they become critical."
-              meta={insightMeta.csat}
+              title={t('insights.sections.csat.chartTitle')}
+              description={t('insights.sections.csat.chartDescription')}
+              meta={{
+                whyMatters: t('insights.methodology.csat.whyMatters'),
+                methodology: t('insights.methodology.csat.methodology'),
+                dataSource: t('insights.methodology.csat.dataSource'),
+              }}
+              labels={methodologyLabels}
             >
               <CSATWarningTable />
             </ChartCard>
@@ -508,14 +552,19 @@ export function InsightsDashboard() {
             viewport={{ once: true, margin: '-80px' }}
           >
             <SectionHeader
-              title="AI Training Priority Matrix"
-              subtitle="Data-driven prioritization for maximum improvement ROI"
-              badge={{ text: 'ACTIONABLE', color: '#3b82f6' }}
+              title={t('insights.sections.priority.title')}
+              subtitle={t('insights.sections.priority.subtitle')}
+              badge={{ text: t('insights.sections.priority.badge'), color: '#3b82f6' }}
             />
             <ChartCard
-              title="Volume vs CSAT Priority Scoring"
-              description="Intents scored by combining volume percentile + CSAT improvement need."
-              meta={insightMeta.priority}
+              title={t('insights.sections.priority.chartTitle')}
+              description={t('insights.sections.priority.chartDescription')}
+              meta={{
+                whyMatters: t('insights.methodology.priority.whyMatters'),
+                methodology: t('insights.methodology.priority.methodology'),
+                dataSource: t('insights.methodology.priority.dataSource'),
+              }}
+              labels={methodologyLabels}
             >
               <AIPriorityChart />
             </ChartCard>
@@ -530,14 +579,19 @@ export function InsightsDashboard() {
             viewport={{ once: true, margin: '-80px' }}
           >
             <SectionHeader
-              title="AI Revenue Impact"
-              subtitle="Measuring AI's direct contribution to business outcomes"
-              badge={{ text: 'BUSINESS VALUE', color: '#10b981' }}
+              title={t('insights.sections.revenue.title')}
+              subtitle={t('insights.sections.revenue.subtitle')}
+              badge={{ text: t('insights.sections.revenue.badge'), color: '#10b981' }}
             />
             <ChartCard
-              title="GMV Influenced by AI Shopping Assistant"
-              description="Revenue influenced when AI interactions occur within 24 hours before purchase."
-              meta={insightMeta.revenue}
+              title={t('insights.sections.revenue.chartTitle')}
+              description={t('insights.sections.revenue.chartDescription')}
+              meta={{
+                whyMatters: t('insights.methodology.revenue.whyMatters'),
+                methodology: t('insights.methodology.revenue.methodology'),
+                dataSource: t('insights.methodology.revenue.dataSource'),
+              }}
+              labels={methodologyLabels}
             >
               <RevenueImpactChart />
             </ChartCard>
@@ -552,14 +606,19 @@ export function InsightsDashboard() {
             viewport={{ once: true, margin: '-80px' }}
           >
             <SectionHeader
-              title="Channel ROI Comparison"
-              subtitle="Optimizing resource allocation across support channels"
-              badge={{ text: 'EFFICIENCY', color: '#8b5cf6' }}
+              title={t('insights.sections.channel.title')}
+              subtitle={t('insights.sections.channel.subtitle')}
+              badge={{ text: t('insights.sections.channel.badge'), color: '#8b5cf6' }}
             />
             <ChartCard
-              title="Volume Share vs Cost Share by Channel"
-              description="Channels where volume share exceeds cost share are cost-effective."
-              meta={insightMeta.channel}
+              title={t('insights.sections.channel.chartTitle')}
+              description={t('insights.sections.channel.chartDescription')}
+              meta={{
+                whyMatters: t('insights.methodology.channel.whyMatters'),
+                methodology: t('insights.methodology.channel.methodology'),
+                dataSource: t('insights.methodology.channel.dataSource'),
+              }}
+              labels={methodologyLabels}
             >
               <ChannelROIChart />
             </ChartCard>
@@ -575,10 +634,8 @@ export function InsightsDashboard() {
           >
             <div className={styles.dataNoteLine} />
             <div className={styles.dataNoteContent}>
-              <span className={styles.dataNoteLabel}>Data Source</span>
-              <span className={styles.dataNoteText}>
-                Real-time BigQuery analytics from Gorgias CX Lab • Last updated: December 2025
-              </span>
+              <span className={styles.dataNoteLabel}>{t('insights.dataNote.label')}</span>
+              <span className={styles.dataNoteText}>{t('insights.dataNote.text')}</span>
             </div>
           </motion.div>
         </div>
