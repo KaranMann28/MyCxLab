@@ -1,0 +1,70 @@
+.container {
+  display: flex;
+  align-items: center;
+  position: relative;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
+  padding: 4px;
+  gap: 0;
+}
+
+:global(.dark) .container {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.slider {
+  position: absolute;
+  left: 4px;
+  width: 40px;
+  height: 28px;
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 14px;
+  z-index: 0;
+}
+
+:global(.dark) .slider {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.button {
+  position: relative;
+  z-index: 1;
+  width: 40px;
+  height: 28px;
+  border: none;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 14px;
+  transition: color 0.2s ease;
+}
+
+.button:hover {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.button.active {
+  color: white;
+}
+
+@media (max-width: 500px) {
+  .container {
+    padding: 3px;
+  }
+
+  .slider {
+    left: 3px;
+    width: 34px;
+    height: 24px;
+    border-radius: 12px;
+  }
+
+  .button {
+    width: 34px;
+    height: 24px;
+    font-size: 0.7rem;
+    border-radius: 12px;
+  }
+}

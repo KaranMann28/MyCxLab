@@ -1,0 +1,81 @@
+{
+  "header": {
+    "title": "The Automation Era",
+    "subtitle": "How AI is reshaping ecommerce customer experience"
+  },
+  "intro": {
+    "title": "What we found",
+    "paragraph1": "Gorgias powers 50 million customer conversations every month across 15,000 ecommerce brands. This gives us a unique lens into how AI automation is actually performing in real customer service environments.",
+    "paragraph2": "This isn't theory. It's what's happening right now."
+  },
+  "stats": {
+    "growth": "Growth in AI-resolved tickets (2024-2025)",
+    "csat": "Average CSAT for fully automated tickets",
+    "gmv": "GMV influenced by AI shopping assistant"
+  },
+  "sections": {
+    "adoption": {
+      "title": "1. The Shift to Automation",
+      "insightTitle": "Why this matters",
+      "insightContent": "Automation isn't replacing humans—it's changing what they do. As AI handles routine queries, human agents focus on complex, high-value interactions. This chart shows the transition happening in real time across thousands of brands.",
+      "keyFinding": "AI-fully-resolved tickets grew from 45K in Jan 2024 to 185K by Dec 2025, while human-resolved volume stayed relatively flat. Brands are scaling support without scaling headcount.",
+      "methodology": "Data pulled from interaction_metrics table covering Jan 2024 - Dec 2025. Resolution types classified by final handler: human agent, AI autonomous resolution, AI with human handover, or automated flow completion."
+    },
+    "csat": {
+      "title": "2. The Satisfaction Gap",
+      "insightTitle": "Why this matters",
+      "insightContent": "Customer satisfaction scores reveal where AI matches human performance and where it falls short. The gap isn't about technology—it's about choosing the right moments to automate.",
+      "keyFinding": "Fully automated AI tickets maintain 4.8/5 CSAT, nearly matching human performance at 4.9/5. But AI tickets requiring handover drop to 4.2/5, suggesting friction in the transition.",
+      "methodology": "CSAT scores collected post-interaction across all resolution types. Scores range 1-5. Only tickets with recorded CSAT included in analysis."
+    },
+    "handover": {
+      "title": "3. The Handover Plateau",
+      "insightTitle": "Why this matters",
+      "insightContent": "The percentage of AI tickets that need human intervention tells us about model confidence and scope. A plateau or rise in handovers suggests we're hitting the limits of current automation capabilities.",
+      "keyFinding": "After declining through early 2025, the handover rate stabilized at ~22% and slightly increased in Q4. This signals that simply throwing more AI at the problem won't improve outcomes—better targeting will.",
+      "methodology": "Ratio calculated from AI-initiated tickets that required human intervention vs those resolved autonomously. Tracked monthly from Jan 2024 - Dec 2025."
+    },
+    "revenue": {
+      "title": "4. The Revenue Connection",
+      "insightTitle": "Why this matters",
+      "insightContent": "Better CX drives revenue. Our shopping assistant doesn't just answer questions—it influences purchase decisions. This chart connects support quality to actual dollars, making the business case for AI investment crystal clear.",
+      "keyFinding": "The shopping assistant influenced $47M in GMV during 2025, representing 3.2% of total merchant GMV. Brands using AI shopping support see measurably higher conversion rates.",
+      "methodology": "Revenue influenced tracked when shopping assistant interaction occurred within 24 hours before purchase. Total GMV represents aggregate merchant volume for comparison baseline."
+    }
+  },
+  "closing": {
+    "title": "What this means for ecommerce",
+    "paragraph1": "Automation works when you choose the right moments. The data shows AI excelling at routine queries—order tracking, product specs, returns—but struggling with complex, emotional, or escalated issues.",
+    "paragraph2": "The winners won't be the brands that automate everything. They'll be the brands that automate the right things and free their teams to focus on what actually requires human judgment.",
+    "paragraph3": "This is just the first edition. More insights coming soon."
+  },
+  "footer": {
+    "mainText": "Gorgias CX Lab | Data from 15,000+ brands | 50M+ monthly conversations",
+    "contactPrompt": "Want to dive deeper?",
+    "contactLink": "Get in touch"
+  },
+  "charts": {
+    "filters": {
+      "humanResolved": "Human Resolved",
+      "aiFullyResolved": "AI Fully Resolved",
+      "aiHandover": "AI Handover",
+      "flowResolved": "Flow Resolved",
+      "human": "Human",
+      "aiFullyAutomated": "AI Fully Automated",
+      "aiOverall": "AI Overall",
+      "flowHandled": "Flow Handled",
+      "handoverRequired": "Handover Required",
+      "fullyAutomated": "Fully Automated",
+      "revenueInfluenced": "Revenue Influenced",
+      "totalGmv": "Total GMV"
+    },
+    "labels": {
+      "revenueInfluenced": "Revenue Influenced ($M)",
+      "totalGmv": "Total GMV ($M)"
+    }
+  },
+  "ui": {
+    "keyFinding": "Key Finding",
+    "methodology": "Methodology"
+  }
+}

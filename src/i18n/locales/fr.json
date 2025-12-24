@@ -1,0 +1,81 @@
+{
+  "header": {
+    "title": "L'Ere de l'Automatisation",
+    "subtitle": "Comment l'IA transforme l'experience client e-commerce"
+  },
+  "intro": {
+    "title": "Ce que nous avons decouvert",
+    "paragraph1": "Gorgias alimente 50 millions de conversations clients chaque mois a travers 15 000 marques e-commerce. Cela nous donne une perspective unique sur la performance reelle de l'automatisation IA dans les environnements de service client.",
+    "paragraph2": "Ce n'est pas de la theorie. C'est ce qui se passe en ce moment."
+  },
+  "stats": {
+    "growth": "Croissance des tickets resolus par IA (2024-2025)",
+    "csat": "CSAT moyen pour les tickets entierement automatises",
+    "gmv": "GMV influencee par l'assistant shopping IA"
+  },
+  "sections": {
+    "adoption": {
+      "title": "1. Le Virage vers l'Automatisation",
+      "insightTitle": "Pourquoi c'est important",
+      "insightContent": "L'automatisation ne remplace pas les humains—elle change ce qu'ils font. Alors que l'IA gere les requetes routinieres, les agents humains se concentrent sur les interactions complexes et a haute valeur ajoutee. Ce graphique montre la transition en temps reel a travers des milliers de marques.",
+      "keyFinding": "Les tickets entierement resolus par IA sont passes de 45K en janvier 2024 a 185K en decembre 2025, tandis que le volume resolu par les humains est reste relativement stable. Les marques augmentent leur support sans augmenter leurs effectifs.",
+      "methodology": "Donnees extraites de la table interaction_metrics couvrant janvier 2024 - decembre 2025. Types de resolution classifies par gestionnaire final : agent humain, resolution autonome IA, IA avec transfert humain, ou completion de flux automatise."
+    },
+    "csat": {
+      "title": "2. L'Ecart de Satisfaction",
+      "insightTitle": "Pourquoi c'est important",
+      "insightContent": "Les scores de satisfaction client revelent ou l'IA egale la performance humaine et ou elle est en retrait. L'ecart n'est pas une question de technologie—c'est une question de choisir les bons moments pour automatiser.",
+      "keyFinding": "Les tickets IA entierement automatises maintiennent un CSAT de 4.8/5, approchant presque la performance humaine a 4.9/5. Mais les tickets IA necessitant un transfert descendent a 4.2/5, suggerant une friction dans la transition.",
+      "methodology": "Scores CSAT collectes apres interaction pour tous les types de resolution. Scores de 1 a 5. Seuls les tickets avec CSAT enregistre sont inclus dans l'analyse."
+    },
+    "handover": {
+      "title": "3. Le Plateau des Transferts",
+      "insightTitle": "Pourquoi c'est important",
+      "insightContent": "Le pourcentage de tickets IA necessitant une intervention humaine nous renseigne sur la confiance du modele et sa portee. Un plateau ou une hausse des transferts suggere que nous atteignons les limites des capacites d'automatisation actuelles.",
+      "keyFinding": "Apres avoir decline debut 2025, le taux de transfert s'est stabilise a environ 22% et a legerement augmente au Q4. Cela signale que simplement ajouter plus d'IA au probleme n'ameliorera pas les resultats—un meilleur ciblage le fera.",
+      "methodology": "Ratio calcule a partir des tickets inities par IA ayant necessite une intervention humaine vs ceux resolus de maniere autonome. Suivi mensuel de janvier 2024 a decembre 2025."
+    },
+    "revenue": {
+      "title": "4. La Connexion au Revenu",
+      "insightTitle": "Pourquoi c'est important",
+      "insightContent": "Une meilleure CX genere du revenu. Notre assistant shopping ne fait pas que repondre aux questions—il influence les decisions d'achat. Ce graphique relie la qualite du support aux euros reels, rendant le cas business pour l'investissement IA parfaitement clair.",
+      "keyFinding": "L'assistant shopping a influence 47M$ de GMV en 2025, representant 3.2% du GMV total des marchands. Les marques utilisant le support shopping IA voient des taux de conversion mesuralement plus eleves.",
+      "methodology": "Revenu influence suivi lorsqu'une interaction avec l'assistant shopping a eu lieu dans les 24 heures avant l'achat. Le GMV total represente le volume agrege des marchands pour la comparaison de base."
+    }
+  },
+  "closing": {
+    "title": "Ce que cela signifie pour le e-commerce",
+    "paragraph1": "L'automatisation fonctionne quand vous choisissez les bons moments. Les donnees montrent que l'IA excelle dans les requetes routinieres—suivi de commande, specifications produit, retours—mais a du mal avec les problemes complexes, emotionnels ou escalades.",
+    "paragraph2": "Les gagnants ne seront pas les marques qui automatisent tout. Ce seront les marques qui automatisent les bonnes choses et liberent leurs equipes pour se concentrer sur ce qui necessite vraiment un jugement humain.",
+    "paragraph3": "Ceci n'est que la premiere edition. Plus d'insights a venir."
+  },
+  "footer": {
+    "mainText": "Gorgias CX Lab | Donnees de 15 000+ marques | 50M+ conversations mensuelles",
+    "contactPrompt": "Envie d'approfondir ?",
+    "contactLink": "Contactez-nous"
+  },
+  "charts": {
+    "filters": {
+      "humanResolved": "Resolu par Humain",
+      "aiFullyResolved": "Entierement Resolu par IA",
+      "aiHandover": "Transfert IA",
+      "flowResolved": "Resolu par Flux",
+      "human": "Humain",
+      "aiFullyAutomated": "IA Entierement Automatise",
+      "aiOverall": "IA Global",
+      "flowHandled": "Gere par Flux",
+      "handoverRequired": "Transfert Requis",
+      "fullyAutomated": "Entierement Automatise",
+      "revenueInfluenced": "Revenu Influence",
+      "totalGmv": "GMV Total"
+    },
+    "labels": {
+      "revenueInfluenced": "Revenu Influence (M$)",
+      "totalGmv": "GMV Total (M$)"
+    }
+  },
+  "ui": {
+    "keyFinding": "Decouverte Cle",
+    "methodology": "Methodologie"
+  }
+}

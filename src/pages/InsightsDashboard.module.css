@@ -1,0 +1,475 @@
+/* Dashboard Container */
+.dashboardContainer {
+  position: relative;
+  overflow: hidden;
+}
+
+.backgroundGradient {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100vh;
+  background: radial-gradient(ellipse at 50% 0%, rgba(102, 126, 234, 0.08) 0%, transparent 60%),
+              radial-gradient(ellipse at 80% 20%, rgba(139, 92, 246, 0.05) 0%, transparent 40%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Hero Section */
+.hero {
+  text-align: center;
+  padding: 3rem 0 3.5rem;
+}
+
+.heroBadge {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #667eea;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  margin-bottom: 1rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.heroTitle {
+  font-size: 2.75rem;
+  font-weight: 700;
+  color: var(--color-text, #1a1a2e);
+  line-height: 1.2;
+  margin-bottom: 1rem;
+}
+
+.heroHighlight {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.heroSubtitle {
+  font-size: 1.1rem;
+  color: var(--color-text-secondary, #64748b);
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+/* KPI Grid */
+.kpiGrid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 1rem;
+  margin-bottom: 3.5rem;
+}
+
+.kpiCard {
+  position: relative;
+  background: var(--color-card-bg, #ffffff);
+  border-radius: 16px;
+  padding: 1.25rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.kpiGlow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100px;
+  pointer-events: none;
+}
+
+.kpiContent {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.kpiTitle {
+  font-size: 0.7rem;
+  color: var(--color-text-secondary, #64748b);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.kpiValue {
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 0.25rem;
+}
+
+.kpiSubtitle {
+  font-size: 0.7rem;
+  color: var(--color-text-secondary, #94a3b8);
+  margin-bottom: 0.5rem;
+}
+
+.kpiTrend {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.65rem;
+  font-weight: 500;
+  padding: 0.2rem 0.5rem;
+  border-radius: 12px;
+  margin-top: auto;
+  width: fit-content;
+}
+
+.trendArrow {
+  font-size: 0.7rem;
+}
+
+.trendUp {
+  background: rgba(16, 185, 129, 0.1);
+  color: #10b981;
+}
+
+.trendDown {
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+}
+
+.trendNeutral {
+  background: rgba(100, 116, 139, 0.1);
+  color: #64748b;
+}
+
+/* Sections */
+.section {
+  margin-bottom: 3rem;
+}
+
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.25rem;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.sectionTitleGroup {
+  flex: 1;
+}
+
+.sectionTitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--color-text, #1a1a2e);
+  margin-bottom: 0.25rem;
+}
+
+.sectionSubtitle {
+  font-size: 0.9rem;
+  color: var(--color-text-secondary, #64748b);
+}
+
+.badge {
+  font-size: 0.65rem;
+  font-weight: 600;
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+  border: 1px solid;
+  transition: all 0.2s ease;
+}
+
+/* Chart Cards */
+.chartCard {
+  background: var(--color-card-bg, #ffffff);
+  border-radius: 20px;
+  padding: 1.75rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 4px 12px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  transition: box-shadow 0.3s ease;
+}
+
+.chartCard:hover {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 10px 24px rgba(0, 0, 0, 0.08);
+}
+
+.chartHeader {
+  margin-bottom: 1.25rem;
+}
+
+.chartTitle {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--color-text, #1a1a2e);
+  margin-bottom: 0.35rem;
+}
+
+.chartDescription {
+  font-size: 0.85rem;
+  color: var(--color-text-secondary, #64748b);
+  line-height: 1.5;
+}
+
+.chartContent {
+  margin-bottom: 1rem;
+}
+
+/* Methodology Panel */
+.methodologyWrapper {
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  margin-top: 1rem;
+  padding-top: 0.75rem;
+}
+
+.methodologyToggle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: none;
+  border: none;
+  font-size: 0.8rem;
+  color: #667eea;
+  cursor: pointer;
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: background 0.2s ease;
+}
+
+.methodologyToggle:hover {
+  background: rgba(102, 126, 234, 0.1);
+}
+
+.methodologyIcon {
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(102, 126, 234, 0.1);
+  border-radius: 50%;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.methodologyContent {
+  overflow: hidden;
+}
+
+.methodologyGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+  padding: 1rem 0;
+}
+
+.methodologyItem {
+  padding: 0.75rem;
+  background: rgba(102, 126, 234, 0.03);
+  border-radius: 10px;
+}
+
+.methodologyLabel {
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: #667eea;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.4rem;
+}
+
+.methodologyText {
+  font-size: 0.8rem;
+  color: var(--color-text-secondary, #64748b);
+  line-height: 1.5;
+}
+
+/* Data Note */
+.dataNote {
+  text-align: center;
+  padding: 2rem 1rem;
+  margin: 2rem 0;
+}
+
+.dataNoteLine {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.3), transparent);
+  margin-bottom: 1.5rem;
+}
+
+.dataNoteContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.dataNoteLabel {
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: #667eea;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.dataNoteText {
+  font-size: 0.8rem;
+  color: var(--color-text-secondary, #64748b);
+}
+
+/* Dark mode */
+:global(.dark) .heroTitle {
+  color: #f1f5f9;
+}
+
+:global(.dark) .heroHighlight {
+  background: linear-gradient(135deg, #a5b4fc 0%, #c4b5fd 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+:global(.dark) .heroBadge {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.2) 0%, rgba(139, 92, 246, 0.2) 100%);
+}
+
+:global(.dark) .kpiCard,
+:global(.dark) .chartCard {
+  background: var(--color-card-bg-dark, #1e293b);
+  border-color: rgba(255, 255, 255, 0.05);
+}
+
+:global(.dark) .sectionTitle,
+:global(.dark) .chartTitle {
+  color: #f1f5f9;
+}
+
+:global(.dark) .methodologyItem {
+  background: rgba(102, 126, 234, 0.08);
+}
+
+:global(.dark) .methodologyWrapper {
+  border-top-color: rgba(255, 255, 255, 0.08);
+}
+
+:global(.dark) .backgroundGradient {
+  background: radial-gradient(ellipse at 50% 0%, rgba(102, 126, 234, 0.12) 0%, transparent 60%),
+              radial-gradient(ellipse at 80% 20%, rgba(139, 92, 246, 0.08) 0%, transparent 40%);
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+  .kpiGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .methodologyGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero {
+    padding: 2rem 0 2.5rem;
+  }
+
+  .heroTitle {
+    font-size: 2rem;
+  }
+
+  .heroSubtitle {
+    font-size: 1rem;
+  }
+
+  .kpiGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+
+  .kpiCard {
+    padding: 1rem;
+  }
+
+  .kpiValue {
+    font-size: 1.4rem;
+  }
+
+  .sectionTitle {
+    font-size: 1.25rem;
+  }
+
+  .sectionHeader {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .chartCard {
+    padding: 1.25rem;
+    border-radius: 16px;
+  }
+
+  .chartTitle {
+    font-size: 1rem;
+  }
+
+  .methodologyGrid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .hero {
+    padding: 1.5rem 0 2rem;
+  }
+
+  .heroTitle {
+    font-size: 1.6rem;
+  }
+
+  .heroSubtitle {
+    font-size: 0.9rem;
+  }
+
+  .kpiGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+  }
+
+  .kpiCard {
+    padding: 0.85rem;
+  }
+
+  .kpiTitle {
+    font-size: 0.6rem;
+  }
+
+  .kpiValue {
+    font-size: 1.2rem;
+  }
+
+  .kpiSubtitle {
+    font-size: 0.6rem;
+  }
+
+  .kpiTrend {
+    font-size: 0.55rem;
+    padding: 0.15rem 0.35rem;
+  }
+
+  .badge {
+    font-size: 0.6rem;
+    padding: 0.3rem 0.6rem;
+  }
+
+  .chartCard {
+    padding: 1rem;
+  }
+}

@@ -1,0 +1,5122 @@
+DIFFERENTIATED INSIGHTS (Not in Periscope)
+
+     Insight Category 1: AUTOMATION ROI & COST IMPACT
+
+     1.1 Automation Savings Calculator
+
+     Business Question: "How much money is automation saving us?"
+     Why Unique: Periscope shows volume, we show dollar impact
+
+     -- Calculate cost savings from automation vs human handling
+     -- Assumes: Human ticket = $5 avg cost, Automated = $0.50 avg cost
+     WITH handling_costs AS (
+       SELECT
+         month_start,
+         handling_type,
+         tickets,
+         CASE
+           WHEN handling_type IN ('fully_resolved', 'flows_fully_resolved') THEN tickets * 0.50
+           WHEN handling_type = 'ai_handover_to_human' THEN tickets * 3.50  -- partial automation
+           ELSE tickets * 5.00  -- human_fully_resolved
+         END as estimated_cost,
+         tickets * 5.00 as if_all_human_cost  -- baseline comparison
+       FROM `growth-ops-recruiting.growth_marketing_recruiting.MonthlyTicketHandlingEvolutionsince2024`
+     )
+     SELECT
+       month_start,
+       SUM(tickets) as total_tickets,
+       ROUND(SUM(estimated_cost), 0) as actual_cost,
+       ROUND(SUM(if_all_human_cost), 0) as if_human_cost,
+       ROUND(SUM(if_all_human_cost) - SUM(estimated_cost), 0) as monthly_savings,
+       ROUND((SUM(if_all_human_cost) - SUM(estimated_cost)) / SUM(if_all_human_cost) * 100, 1) as savings_percent
+     FROM handling_costs
+     GROUP BY month_start
+     ORDER BY month_start
+
+     Visualization: Area chart showing cumulative savings over time + big number card showing total YTD savings
+    Response:
+    [{
+  "month_start": "2024-01-01",
+  "total_tickets": "30340849",
+  "actual_cost": "151703306.0",
+  "if_human_cost": "151704245.0",
+  "monthly_savings": "939.0",
+  "savings_percent": "0.0"
+}, {
+  "month_start": "2024-02-01",
+  "total_tickets": "28187512",
+  "actual_cost": "140935588.0",
+  "if_human_cost": "140937560.0",
+  "monthly_savings": "1973.0",
+  "savings_percent": "0.0"
+}, {
+  "month_start": "2024-03-01",
+  "total_tickets": "31315812",
+  "actual_cost": "156571868.0",
+  "if_human_cost": "156579060.0",
+  "monthly_savings": "7193.0",
+  "savings_percent": "0.0"
+}, {
+  "month_start": "2024-04-01",
+  "total_tickets": "30645891",
+  "actual_cost": "153218325.0",
+  "if_human_cost": "153229455.0",
+  "monthly_savings": "11130.0",
+  "savings_percent": "0.0"
+}, {
+  "month_start": "2024-05-01",
+  "total_tickets": "29571155",
+  "actual_cost": "147826992.0",
+  "if_human_cost": "147855775.0",
+  "monthly_savings": "28784.0",
+  "savings_percent": "0.0"
+}, {
+  "month_start": "2024-06-01",
+  "total_tickets": "25888521",
+  "actual_cost": "129339365.0",
+  "if_human_cost": "129442605.0",
+  "monthly_savings": "103241.0",
+  "savings_percent": "0.1"
+}, {
+  "month_start": "2024-07-01",
+  "total_tickets": "25827522",
+  "actual_cost": "129041858.0",
+  "if_human_cost": "129137610.0",
+  "monthly_savings": "95753.0",
+  "savings_percent": "0.1"
+}, {
+  "month_start": "2024-08-01",
+  "total_tickets": "25439339",
+  "actual_cost": "127078675.0",
+  "if_human_cost": "127196695.0",
+  "monthly_savings": "118020.0",
+  "savings_percent": "0.1"
+}, {
+  "month_start": "2024-09-01",
+  "total_tickets": "24589022",
+  "actual_cost": "122809890.0",
+  "if_human_cost": "122945110.0",
+  "monthly_savings": "135221.0",
+  "savings_percent": "0.1"
+}, {
+  "month_start": "2024-10-01",
+  "total_tickets": "26206463",
+  "actual_cost": "130779375.0",
+  "if_human_cost": "131032315.0",
+  "monthly_savings": "252941.0",
+  "savings_percent": "0.2"
+}, {
+  "month_start": "2024-11-01",
+  "total_tickets": "29664159",
+  "actual_cost": "147198485.0",
+  "if_human_cost": "148320795.0",
+  "monthly_savings": "1122311.0",
+  "savings_percent": "0.8"
+}, {
+  "month_start": "2024-12-01",
+  "total_tickets": "34216744",
+  "actual_cost": "168903758.0",
+  "if_human_cost": "171083720.0",
+  "monthly_savings": "2179962.0",
+  "savings_percent": "1.3"
+}, {
+  "month_start": "2025-01-01",
+  "total_tickets": "27330412",
+  "actual_cost": "135405718.0",
+  "if_human_cost": "136652060.0",
+  "monthly_savings": "1246343.0",
+  "savings_percent": "0.9"
+}, {
+  "month_start": "2025-02-01",
+  "total_tickets": "23175921",
+  "actual_cost": "114801168.0",
+  "if_human_cost": "115879605.0",
+  "monthly_savings": "1078437.0",
+  "savings_percent": "0.9"
+}, {
+  "month_start": "2025-03-01",
+  "total_tickets": "25808854",
+  "actual_cost": "127792247.0",
+  "if_human_cost": "129044270.0",
+  "monthly_savings": "1252023.0",
+  "savings_percent": "1.0"
+}, {
+  "month_start": "2025-04-01",
+  "total_tickets": "22350919",
+  "actual_cost": "110509537.0",
+  "if_human_cost": "111754595.0",
+  "monthly_savings": "1245059.0",
+  "savings_percent": "1.1"
+}, {
+  "month_start": "2025-05-01",
+  "total_tickets": "26201993",
+  "actual_cost": "129491638.0",
+  "if_human_cost": "131009965.0",
+  "monthly_savings": "1518327.0",
+  "savings_percent": "1.2"
+}, {
+  "month_start": "2025-06-01",
+  "total_tickets": "23767130",
+  "actual_cost": "117711774.0",
+  "if_human_cost": "118835650.0",
+  "monthly_savings": "1123877.0",
+  "savings_percent": "0.9"
+}, {
+  "month_start": "2025-07-01",
+  "total_tickets": "24392137",
+  "actual_cost": "120725738.0",
+  "if_human_cost": "121960685.0",
+  "monthly_savings": "1234947.0",
+  "savings_percent": "1.0"
+}, {
+  "month_start": "2025-08-01",
+  "total_tickets": "23247191",
+  "actual_cost": "114956065.0",
+  "if_human_cost": "116235955.0",
+  "monthly_savings": "1279890.0",
+  "savings_percent": "1.1"
+}, {
+  "month_start": "2025-09-01",
+  "total_tickets": "21115642",
+  "actual_cost": "104359097.0",
+  "if_human_cost": "105578210.0",
+  "monthly_savings": "1219113.0",
+  "savings_percent": "1.2"
+}, {
+  "month_start": "2025-10-01",
+  "total_tickets": "22217845",
+  "actual_cost": "109720108.0",
+  "if_human_cost": "111089225.0",
+  "monthly_savings": "1369118.0",
+  "savings_percent": "1.2"
+}, {
+  "month_start": "2025-11-01",
+  "total_tickets": "25301578",
+  "actual_cost": "125221171.0",
+  "if_human_cost": "126507890.0",
+  "monthly_savings": "1286720.0",
+  "savings_percent": "1.0"
+}, {
+  "month_start": "2025-12-01",
+  "total_tickets": "19522957",
+  "actual_cost": "96464408.0",
+  "if_human_cost": "97614785.0",
+  "monthly_savings": "1150377.0",
+  "savings_percent": "1.2"
+}]
+
+
+
+
+     ---
+     1.2 Handover Cost Leakage
+
+     Business Question: "How much are handovers costing us in lost efficiency?"
+     Why Unique: Quantifies the cost of imperfect automation
+
+     -- Show the cost impact of handovers that could have been avoided
+     SELECT
+       month_start,
+       handover_tickets,
+       fully_automated_tickets,
+       -- If handover tickets were fully automated instead
+       handover_tickets * 4.50 as handover_cost_premium,  -- $5 human - $0.50 auto
+       ROUND(handover_percent, 1) as handover_rate,
+       -- Opportunity: if we reduced handovers by 50%
+       ROUND(handover_tickets * 0.5 * 4.50, 0) as potential_savings_50pct_reduction
+     FROM `growth-ops-recruiting.growth_marketing_recruiting.AIAgentTicketHandovervsFullyAutomatedTickets`
+     ORDER BY month_start
+
+     Visualization: Stacked bar (handover vs automated) with line overlay showing "cost leakage"
+    Response:
+    [{
+  "month_start": "2025-01-01",
+  "handover_tickets": "848949",
+  "fully_automated_tickets": "424706",
+  "handover_cost_premium": "3820270.5",
+  "handover_rate": "66.7",
+  "potential_savings_50pct_reduction": "1910135.0"
+}, {
+  "month_start": "2025-02-01",
+  "handover_tickets": "800864",
+  "fully_automated_tickets": "391172",
+  "handover_cost_premium": "3603888.0",
+  "handover_rate": "67.2",
+  "potential_savings_50pct_reduction": "1801944.0"
+}, {
+  "month_start": "2025-03-01",
+  "handover_tickets": "990307",
+  "fully_automated_tickets": "515106",
+  "handover_cost_premium": "4456381.5",
+  "handover_rate": "65.8",
+  "potential_savings_50pct_reduction": "2228191.0"
+}, {
+  "month_start": "2025-04-01",
+  "handover_tickets": "941305",
+  "fully_automated_tickets": "596284",
+  "handover_cost_premium": "4235872.5",
+  "handover_rate": "61.2",
+  "potential_savings_50pct_reduction": "2117936.0"
+}, {
+  "month_start": "2025-05-01",
+  "handover_tickets": "1101353",
+  "fully_automated_tickets": "736524",
+  "handover_cost_premium": "4956088.5",
+  "handover_rate": "59.9",
+  "potential_savings_50pct_reduction": "2478044.0"
+}, {
+  "month_start": "2025-06-01",
+  "handover_tickets": "1121272",
+  "fully_automated_tickets": "919874",
+  "handover_cost_premium": "5045724.0",
+  "handover_rate": "54.9",
+  "potential_savings_50pct_reduction": "2522862.0"
+}, {
+  "month_start": "2025-07-01",
+  "handover_tickets": "1213533",
+  "fully_automated_tickets": "1203004",
+  "handover_cost_premium": "5460898.5",
+  "handover_rate": "50.2",
+  "potential_savings_50pct_reduction": "2730449.0"
+}, {
+  "month_start": "2025-08-01",
+  "handover_tickets": "1303573",
+  "fully_automated_tickets": "981627",
+  "handover_cost_premium": "5866078.5",
+  "handover_rate": "57.0",
+  "potential_savings_50pct_reduction": "2933039.0"
+}, {
+  "month_start": "2025-09-01",
+  "handover_tickets": "1300488",
+  "fully_automated_tickets": "889650",
+  "handover_cost_premium": "5852196.0",
+  "handover_rate": "59.4",
+  "potential_savings_50pct_reduction": "2926098.0"
+}, {
+  "month_start": "2025-10-01",
+  "handover_tickets": "1421669",
+  "fully_automated_tickets": "1186466",
+  "handover_cost_premium": "6397510.5",
+  "handover_rate": "54.5",
+  "potential_savings_50pct_reduction": "3198755.0"
+}, {
+  "month_start": "2025-11-01",
+  "handover_tickets": "1684461",
+  "fully_automated_tickets": "1624212",
+  "handover_cost_premium": "7580074.5",
+  "handover_rate": "50.9",
+  "potential_savings_50pct_reduction": "3790037.0"
+}, {
+  "month_start": "2025-12-01",
+  "handover_tickets": "1114287",
+  "fully_automated_tickets": "955786",
+  "handover_cost_premium": "5014291.5",
+  "handover_rate": "53.8",
+  "potential_savings_50pct_reduction": "2507146.0"
+}]
+
+
+
+     ---
+     Insight Category 2: PREDICTIVE & ANOMALY DETECTION
+
+     2.1 Volume Anomaly Detector
+
+     Business Question: "Are we seeing unusual ticket spikes that need attention?"
+     Why Unique: Periscope shows history, we detect anomalies in real-time
+
+     -- Detect months with unusual volume (>20% deviation from trend)
+     WITH monthly_stats AS (
+       SELECT
+         month_start,
+         tickets,
+         AVG(tickets) OVER (ORDER BY month_start ROWS BETWEEN 3 PRECEDING AND 1 PRECEDING) as trailing_avg,
+         STDDEV(tickets) OVER (ORDER BY month_start ROWS BETWEEN 6 PRECEDING AND 1 PRECEDING) as trailing_stddev
+       FROM `growth-ops-recruiting.growth_marketing_recruiting.MonthlyTicketEvolutionsince2024`
+     )
+     SELECT
+       month_start,
+       tickets,
+       ROUND(trailing_avg, 0) as expected_volume,
+       ROUND((tickets - trailing_avg) / NULLIF(trailing_avg, 0) * 100, 1) as pct_deviation,
+       CASE
+         WHEN tickets > trailing_avg + 2 * trailing_stddev THEN 'SPIKE - Investigate'
+         WHEN tickets < trailing_avg - 2 * trailing_stddev THEN 'DROP - Investigate'
+         WHEN tickets > trailing_avg * 1.15 THEN 'Above Normal'
+         WHEN tickets < trailing_avg * 0.85 THEN 'Below Normal'
+         ELSE 'Normal'
+       END as status
+     FROM monthly_stats
+     WHERE trailing_avg IS NOT NULL
+     ORDER BY month_start
+
+     Visualization: Line chart with colored bands showing normal range, anomalies highlighted with markers
+
+     ---
+     2.2 CSAT Early Warning System
+
+     Business Question: "Which areas are trending toward poor satisfaction before it becomes a crisis?"
+     Why Unique: Predictive alerts, not just historical reporting
+
+     -- Identify intents with declining CSAT trend (potential problems brewing)
+WITH csat_trends AS (
+       SELECT
+         contact_reason,
+         ticket_date,
+         avg_score,
+         ticket_count,
+         AVG(avg_score) OVER (PARTITION BY contact_reason ORDER BY ticket_date ROWS BETWEEN 13 PRECEDING AND 7 PRECEDING) as prev_week_avg,
+         AVG(avg_score) OVER (PARTITION BY contact_reason ORDER BY ticket_date ROWS BETWEEN 6 PRECEDING AND CURRENT ROW) as current_week_avg
+       FROM `growth-ops-recruiting.growth_marketing_recruiting.AIAgentCSATbyTicketIntentRolling7Day`
+     )
+     SELECT
+       contact_reason,
+       ROUND(AVG(current_week_avg), 2) as current_csat,
+       ROUND(AVG(prev_week_avg), 2) as previous_csat,
+       ROUND(AVG(current_week_avg) - AVG(prev_week_avg), 2) as csat_change,
+       SUM(ticket_count) as volume,
+       CASE
+         WHEN AVG(current_week_avg) - AVG(prev_week_avg) < -0.2 THEN 'DECLINING - Action Needed'
+         WHEN AVG(current_week_avg) - AVG(prev_week_avg) < -0.1 THEN 'Watch Closely'
+         WHEN AVG(current_week_avg) - AVG(prev_week_avg) > 0.1 THEN 'Improving'
+         ELSE 'Stable'
+       END as trend_status
+     FROM csat_trends
+     WHERE ticket_date >= DATE_SUB(CURRENT_DATE(), INTERVAL 14 DAY)
+     GROUP BY contact_reason
+     HAVING SUM(ticket_count) > 100  -- Only significant volume
+     ORDER BY csat_change ASC
+
+
+     Visualization: Table with trend indicators (arrows), color-coded by status, sorted by urgency
+    Response:
+    [{
+  "contact_reason": "Wholesale",
+  "current_csat": "3.36",
+  "previous_csat": "3.77",
+  "csat_change": "-0.41",
+  "volume": "168",
+  "trend_status": "DECLINING - Action Needed"
+}, {
+  "contact_reason": "Order",
+  "current_csat": "3.3",
+  "previous_csat": "3.46",
+  "csat_change": "-0.17",
+  "volume": "77518",
+  "trend_status": "Watch Closely"
+}, {
+  "contact_reason": "Shipping",
+  "current_csat": "3.58",
+  "previous_csat": "3.72",
+  "csat_change": "-0.14",
+  "volume": "12511",
+  "trend_status": "Watch Closely"
+}, {
+  "contact_reason": "Marketing",
+  "current_csat": "3.86",
+  "previous_csat": "3.98",
+  "csat_change": "-0.12",
+  "volume": "409",
+  "trend_status": "Watch Closely"
+}, {
+  "contact_reason": "Other",
+  "current_csat": "4.1",
+  "previous_csat": "4.21",
+  "csat_change": "-0.12",
+  "volume": "11844",
+  "trend_status": "Watch Closely"
+}, {
+  "contact_reason": "Exchange",
+  "current_csat": "3.9",
+  "previous_csat": "3.99",
+  "csat_change": "-0.09",
+  "volume": "4725",
+  "trend_status": "Stable"
+}, {
+  "contact_reason": "Account",
+  "current_csat": "3.65",
+  "previous_csat": "3.72",
+  "csat_change": "-0.07",
+  "volume": "762",
+  "trend_status": "Stable"
+}, {
+  "contact_reason": "Promotion \u0026 Discount",
+  "current_csat": "3.04",
+  "previous_csat": "3.1",
+  "csat_change": "-0.06",
+  "volume": "3310",
+  "trend_status": "Stable"
+}, {
+  "contact_reason": "Return",
+  "current_csat": "3.77",
+  "previous_csat": "3.81",
+  "csat_change": "-0.04",
+  "volume": "8169",
+  "trend_status": "Stable"
+}, {
+  "contact_reason": "Product",
+  "current_csat": "3.77",
+  "previous_csat": "3.8",
+  "csat_change": "-0.03",
+  "volume": "16478",
+  "trend_status": "Stable"
+}, {
+  "contact_reason": "Warranty",
+  "current_csat": "3.27",
+  "previous_csat": "3.29",
+  "csat_change": "-0.03",
+  "volume": "804",
+  "trend_status": "Stable"
+}, {
+  "contact_reason": "Feedback",
+  "current_csat": "3.37",
+  "previous_csat": "3.38",
+  "csat_change": "-0.01",
+  "volume": "1179",
+  "trend_status": "Stable"
+}, {
+  "contact_reason": "Subscription",
+  "current_csat": "4.09",
+  "previous_csat": "4.05",
+  "csat_change": "0.05",
+  "volume": "3637",
+  "trend_status": "Stable"
+}]
+
+     ---
+     Insight Category 3: AI TRAINING PRIORITIES
+
+     3.1 AI Improvement Priority Matrix
+
+     Business Question: "Where should we focus AI training for maximum impact?"
+     Why Unique: Actionable prioritization, not just metrics
+
+     -- Score intents by: High Volume + Low CSAT + High Handover = High Priority
+     WITH intent_analysis AS (
+       SELECT
+         c.contact_reason,
+         AVG(c.avg_score) as avg_csat,
+         SUM(c.ticket_count) as total_volume,
+         -- Normalize to 0-100 scale for scoring
+         PERCENT_RANK() OVER (ORDER BY SUM(c.ticket_count)) * 100 as volume_percentile,
+         PERCENT_RANK() OVER (ORDER BY AVG(c.avg_score) DESC) * 100 as csat_issue_percentile  -- Lower CSAT = higher score
+       FROM `growth-ops-recruiting.growth_marketing_recruiting.AIAgentCSATbyTicketIntentRolling7Day` c
+       WHERE c.ticket_date >= DATE_SUB(CURRENT_DATE(), INTERVAL 30 DAY)
+       GROUP BY c.contact_reason
+     )
+     SELECT
+       contact_reason,
+       total_volume,
+       ROUND(avg_csat, 2) as current_csat,
+       ROUND(volume_percentile, 0) as volume_score,
+       ROUND(csat_issue_percentile, 0) as improvement_need_score,
+       ROUND((volume_percentile + csat_issue_percentile) / 2, 0) as priority_score,
+       CASE
+         WHEN (volume_percentile + csat_issue_percentile) / 2 >= 75 THEN 'P1 - Immediate Focus'
+         WHEN (volume_percentile + csat_issue_percentile) / 2 >= 50 THEN 'P2 - High Priority'
+         WHEN (volume_percentile + csat_issue_percentile) / 2 >= 25 THEN 'P3 - Monitor'
+         ELSE 'P4 - Optimized'
+       END as priority_tier
+     FROM intent_analysis
+     ORDER BY priority_score DESC
+
+     Visualization: Scatter plot (Volume vs CSAT) with quadrants labeled, bubble size = priority score
+    Response:
+    [{
+  "contact_reason": "Order",
+  "total_volume": "230465",
+  "current_csat": "3.38",
+  "volume_score": "100.0",
+  "improvement_need_score": "83.0",
+  "priority_score": "92.0",
+  "priority_tier": "P1 - Immediate Focus"
+}, {
+  "contact_reason": "Promotion \u0026 Discount",
+  "total_volume": "19851",
+  "current_csat": "3.13",
+  "volume_score": "58.0",
+  "improvement_need_score": "100.0",
+  "priority_score": "79.0",
+  "priority_tier": "P1 - Immediate Focus"
+}, {
+  "contact_reason": "Shipping",
+  "total_volume": "46268",
+  "current_csat": "3.66",
+  "volume_score": "83.0",
+  "improvement_need_score": "58.0",
+  "priority_score": "71.0",
+  "priority_tier": "P2 - High Priority"
+}, {
+  "contact_reason": "Product",
+  "total_volume": "73777",
+  "current_csat": "3.8",
+  "volume_score": "92.0",
+  "improvement_need_score": "42.0",
+  "priority_score": "67.0",
+  "priority_tier": "P2 - High Priority"
+}, {
+  "contact_reason": "Feedback",
+  "total_volume": "5037",
+  "current_csat": "3.39",
+  "volume_score": "33.0",
+  "improvement_need_score": "75.0",
+  "priority_score": "54.0",
+  "priority_tier": "P2 - High Priority"
+}, {
+  "contact_reason": "Warranty",
+  "total_volume": "3315",
+  "current_csat": "3.27",
+  "volume_score": "17.0",
+  "improvement_need_score": "92.0",
+  "priority_score": "54.0",
+  "priority_tier": "P2 - High Priority"
+}, {
+  "contact_reason": "Return",
+  "total_volume": "32658",
+  "current_csat": "3.81",
+  "volume_score": "67.0",
+  "improvement_need_score": "33.0",
+  "priority_score": "50.0",
+  "priority_tier": "P3 - Monitor"
+}, {
+  "contact_reason": "Other",
+  "total_volume": "43734",
+  "current_csat": "4.16",
+  "volume_score": "75.0",
+  "improvement_need_score": "0.0",
+  "priority_score": "38.0",
+  "priority_tier": "P3 - Monitor"
+}, {
+  "contact_reason": "Account",
+  "total_volume": "3821",
+  "current_csat": "3.71",
+  "volume_score": "25.0",
+  "improvement_need_score": "50.0",
+  "priority_score": "38.0",
+  "priority_tier": "P3 - Monitor"
+}, {
+  "contact_reason": "Exchange",
+  "total_volume": "17808",
+  "current_csat": "3.97",
+  "volume_score": "50.0",
+  "improvement_need_score": "17.0",
+  "priority_score": "33.0",
+  "priority_tier": "P3 - Monitor"
+}, {
+  "contact_reason": "Wholesale",
+  "total_volume": "637",
+  "current_csat": "3.56",
+  "volume_score": "0.0",
+  "improvement_need_score": "67.0",
+  "priority_score": "33.0",
+  "priority_tier": "P3 - Monitor"
+}, {
+  "contact_reason": "Subscription",
+  "total_volume": "15146",
+  "current_csat": "4.08",
+  "volume_score": "42.0",
+  "improvement_need_score": "8.0",
+  "priority_score": "25.0",
+  "priority_tier": "P3 - Monitor"
+}, {
+  "contact_reason": "Marketing",
+  "total_volume": "2242",
+  "current_csat": "3.96",
+  "volume_score": "8.0",
+  "improvement_need_score": "25.0",
+  "priority_score": "17.0",
+  "priority_tier": "P4 - Optimized"
+}]
+
+
+
+     ---
+     3.2 Handover Root Cause Analysis
+
+     Business Question: "Why are tickets being handed over to humans?"
+     Why Unique: Diagnoses the problem, not just reports the symptom
+
+     -- Analyze which intents drive the most handovers (proxy from CSAT patterns)
+     -- Lower CSAT on all_ai_agent vs fully_resolved suggests handover friction
+     SELECT
+       c.month,
+       c.csat_ai_agent_fully_resolved as csat_when_ai_handles,
+       c.csat_all_ai_agent as csat_including_handovers,
+       ROUND(c.csat_ai_agent_fully_resolved - c.csat_all_ai_agent, 2) as handover_csat_penalty,
+       c.count_ai_agent_fully_resolved as fully_resolved_count,
+       c.count_all_ai_agent - c.count_ai_agent_fully_resolved as handover_count,
+       ROUND((c.count_all_ai_agent - c.count_ai_agent_fully_resolved) * 1.0 / c.count_all_ai_agent * 100, 1) as handover_rate
+     FROM `growth-ops-recruiting.growth_marketing_recruiting.CSATbyInteractionType` c
+     ORDER BY c.month
+
+     Visualization: Dual line chart showing CSAT gap between fully-resolved vs all-AI, with handover rate overlay
+    Response:
+    [{
+  "month": "2025-01-01",
+  "csat_when_ai_handles": "3.7",
+  "csat_including_handovers": "4.09",
+  "handover_csat_penalty": "-0.39",
+  "fully_resolved_count": "41549",
+  "handover_count": "127573",
+  "handover_rate": "75.4"
+}, {
+  "month": "2025-02-01",
+  "csat_when_ai_handles": "3.72",
+  "csat_including_handovers": "4.14",
+  "handover_csat_penalty": "-0.42",
+  "fully_resolved_count": "33916",
+  "handover_count": "106975",
+  "handover_rate": "75.9"
+}, {
+  "month": "2025-03-01",
+  "csat_when_ai_handles": "3.8",
+  "csat_including_handovers": "4.18",
+  "handover_csat_penalty": "-0.38",
+  "fully_resolved_count": "41615",
+  "handover_count": "132914",
+  "handover_rate": "76.2"
+}, {
+  "month": "2025-04-01",
+  "csat_when_ai_handles": "3.72",
+  "csat_including_handovers": "4.11",
+  "handover_csat_penalty": "-0.39",
+  "fully_resolved_count": "46406",
+  "handover_count": "137474",
+  "handover_rate": "74.8"
+}, {
+  "month": "2025-05-01",
+  "csat_when_ai_handles": "3.75",
+  "csat_including_handovers": "4.12",
+  "handover_csat_penalty": "-0.37",
+  "fully_resolved_count": "55768",
+  "handover_count": "158642",
+  "handover_rate": "74.0"
+}, {
+  "month": "2025-06-01",
+  "csat_when_ai_handles": "3.77",
+  "csat_including_handovers": "4.11",
+  "handover_csat_penalty": "-0.34",
+  "fully_resolved_count": "61606",
+  "handover_count": "160404",
+  "handover_rate": "72.3"
+}, {
+  "month": "2025-07-01",
+  "csat_when_ai_handles": "3.71",
+  "csat_including_handovers": "4.07",
+  "handover_csat_penalty": "-0.36",
+  "fully_resolved_count": "72363",
+  "handover_count": "174628",
+  "handover_rate": "70.7"
+}, {
+  "month": "2025-08-01",
+  "csat_when_ai_handles": "3.8",
+  "csat_including_handovers": "4.09",
+  "handover_csat_penalty": "-0.29",
+  "fully_resolved_count": "59377",
+  "handover_count": "183610",
+  "handover_rate": "75.6"
+}, {
+  "month": "2025-09-01",
+  "csat_when_ai_handles": "3.82",
+  "csat_including_handovers": "4.15",
+  "handover_csat_penalty": "-0.33",
+  "fully_resolved_count": "53938",
+  "handover_count": "181171",
+  "handover_rate": "77.1"
+}, {
+  "month": "2025-10-01",
+  "csat_when_ai_handles": "3.87",
+  "csat_including_handovers": "4.15",
+  "handover_csat_penalty": "-0.28",
+  "fully_resolved_count": "65603",
+  "handover_count": "191554",
+  "handover_rate": "74.5"
+}, {
+  "month": "2025-11-01",
+  "csat_when_ai_handles": "3.83",
+  "csat_including_handovers": "4.12",
+  "handover_csat_penalty": "-0.29",
+  "fully_resolved_count": "84821",
+  "handover_count": "233998",
+  "handover_rate": "73.4"
+}]
+
+
+
+
+
+     ---
+     Insight Category 4: MERCHANT SUCCESS INSIGHTS
+
+     4.1 Merchant Health Score Dashboard
+
+     Business Question: "Which merchants need support to improve their CX?"
+     Why Unique: Proactive merchant success, not reactive reporting
+
+     -- Create composite health score for each merchant
+     SELECT
+       account_name,
+       quarter_label,
+       total_interactions,
+       automation_rate_percent,
+       avg_first_response_time_min,
+       -- Health score components (0-100 each)
+       LEAST(100, automation_rate_percent * 1.5) as automation_score,  -- Max 100 at 67% automation
+       GREATEST(0, 100 - (avg_first_response_time_min * 2)) as response_time_score,  -- Penalize slow response
+       -- Composite health score
+       ROUND(
+         (LEAST(100, automation_rate_percent * 1.5) +
+          GREATEST(0, 100 - (avg_first_response_time_min * 2))) / 2,
+         0
+       ) as health_score,
+       CASE
+         WHEN (LEAST(100, automation_rate_percent * 1.5) + GREATEST(0, 100 - (avg_first_response_time_min * 2))) / 2 >= 70 THEN 'Healthy'
+         WHEN (LEAST(100, automation_rate_percent * 1.5) + GREATEST(0, 100 - (avg_first_response_time_min * 2))) / 2 >= 40 THEN 'At Risk'
+         ELSE 'Needs Intervention'
+       END as health_status
+     FROM `growth-ops-recruiting.growth_marketing_recruiting.GorgiasCustomersInteractionMetrics`
+     ORDER BY health_score ASC  -- Show struggling merchants first
+
+     Visualization: Sortable table with health score gauge, expandable rows for detail
+     Response:
+     [{
+  "account_name": "MOVDLQRDPK",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "38530",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "1445.9",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "NDBAJMGYHE",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "88384",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "414.0",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "VECBEBDNQX",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "69857",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "167.0",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "KJUVURDONW",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "92174",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "37.7",
+  "automation_score": null,
+  "response_time_score": "24.599999999999994",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "NQRSZCWOEW",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "60296",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "1185.2",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "HPRJTONYYQ",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "74156",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "181.5",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "QNNPASZOSU",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "71594",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "376.6",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "HOBKCDXNFV",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "75463",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "45.6",
+  "automation_score": null,
+  "response_time_score": "8.7999999999999972",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "AEWZCHWFWP",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "53909",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "0.2",
+  "automation_score": null,
+  "response_time_score": "99.6",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "QJZAMEPNSQ",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "50666",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "387.7",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "VJQABUHZPY",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "6425",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "7356.4",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "PJJKRRZAFK",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "6241",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "1796.7",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "PQFWHLMVSR",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "54012",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": null,
+  "automation_score": null,
+  "response_time_score": null,
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "MAZQMQHAAE",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "147418",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "291.4",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "PPFHFCCBGE",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "80439",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "620.5",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "QSZNAEPFDY",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "50828",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "736.1",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "ENVTSYYHUV",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "48102",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "743.9",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "OWJTADXKKB",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "60313",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "2670.1",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "UVOHTCFOLJ",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "73565",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "167.2",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "CWIKIDDAND",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "28896",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "37.0",
+  "automation_score": null,
+  "response_time_score": "26.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "HPOAOVNPIO",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "40133",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "472.6",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "VAQXLCGSCD",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "45625",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "664.1",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "MRZOLCPYDZ",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "87640",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "29.0",
+  "automation_score": null,
+  "response_time_score": "42.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "RPRTQEOLRO",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "65333",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "108.6",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "MYVMTPSBEU",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "79101",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "1118.6",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "KQFPJHUBMB",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "43917",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "6034.2",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "QVDTMEKPDV",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "5056",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "2100.5",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "FIIWDZNIOX",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "37699",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "28.8",
+  "automation_score": null,
+  "response_time_score": "42.4",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "USKMFDKUXX",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "113349",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "254.3",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "XLOLGRTPSL",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "30666",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "591.6",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "MVQNZNHDTU",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "25332",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "1968.6",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "LLHOOZURGI",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "63063",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "945.8",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "EOZVNXXDUW",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "29561",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "293.0",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "WXIJUAVGFC",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "42682",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "555.7",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "MPNTRBHZEF",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "132554",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "2609.0",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "HQWMPINCOF",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "52009",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "2315.9",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "TRCWYYVIYE",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "57973",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "921.5",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "ORFPLRQCDC",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "97053",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "165.1",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "XCDMBNFSKM",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "55311",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "756.4",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "RZLZCPTGUG",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "10",
+  "automation_rate_percent": "0.3",
+  "avg_first_response_time_min": null,
+  "automation_score": "0.44999999999999996",
+  "response_time_score": null,
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "QWWDXBQGGC",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "55555",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "2743.9",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "TXWQHDUZDP",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "101196",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "32.8",
+  "automation_score": null,
+  "response_time_score": "34.400000000000006",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "XHBTIWWWCC",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "129899",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "886.6",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "KJMZBWHVJV",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "57517",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "1790.4",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "IPWSMWZIIN",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "60601",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "464.4",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "RQMPYZPQAV",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "93148",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "1216.9",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "WPWLDVUKEG",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "58860",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "2752.6",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "EFAQDIHJEV",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "214062",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "5591.2",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "TKRIYQMTHF",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "52921",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "69.7",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "PYHIYDYNKB",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "5159",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "342.1",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "SAMMMADTQM",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "71689",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "2004.1",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "WSZSGJTHJR",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "54666",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "43.2",
+  "automation_score": null,
+  "response_time_score": "13.599999999999994",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "LSSBDZYEMF",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "48569",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "1823.6",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "BUJFKTMIRH",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "65501",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "1064.7",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "YMMWEYHFMT",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "65899",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "524.1",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "UIHATMFXII",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "47115",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "1383.6",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "HIIQEQBWNB",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "52602",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "473.7",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "CLPGJZQOCY",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "81133",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "692.5",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "GPVRFRGOJC",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "81341",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "1972.0",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "UGYUYQFXGN",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "93132",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "92.4",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "ZAFWXOFRCM",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "50687",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "913.0",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "AOJNMWNHSA",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "79962",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "1104.5",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "KQAAMTSFXT",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "6",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "571.5",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "OQMGUPJAXH",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "50438",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "1499.7",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "ESVCAHDXGQ",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "60779",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "1072.3",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "XUUXRVBPPS",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "39500",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "719.1",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "HSFOFDIGMI",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "60382",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "127.0",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "OLOXYQNNKG",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "39163",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "625.9",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "EECHYBNEPG",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "76449",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "280.7",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "TUKSZTLZIT",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "44405",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "350.2",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "BEXHGZXCEO",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "217401",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "247.3",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "TQOLCAQBAS",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "82772",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "189.4",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "JZZCLGMIHE",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "56847",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "33.3",
+  "automation_score": null,
+  "response_time_score": "33.400000000000006",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "FEWTFYFXIJ",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "23730",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "487.6",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "ZFQKHOUXEE",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "53773",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "213.1",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "OKCJFZOLKH",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "104863",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "502.4",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "ETQQHYLBPU",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "21063",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "235.3",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "UALYXBXRFB",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "54174",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "2213.6",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "GURUYHRZEZ",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "72210",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "2918.0",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "CZCGOPSUZI",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "68140",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "1409.1",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "FURGJVTNXV",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "62691",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "3553.0",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "BFTBGUWNUY",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "112623",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "900.4",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "RTUSSGACNP",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "67835",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "621.7",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "UOLQJKPHRR",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "47551",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "1501.7",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "MOSMRZMDIM",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "65668",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "7531.8",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "WTBZAGOETU",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "56424",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "1769.4",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "YALUAGBBAI",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "48394",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "619.6",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "EKQYNIHBWH",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "182670",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "2448.6",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "WFNCHPADQI",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "64693",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "0.2",
+  "automation_score": null,
+  "response_time_score": "99.6",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "PNJYUQHPIR",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "64088",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "1672.4",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "MYGYCAABJN",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "67725",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "2514.9",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "OGDBQCCQGS",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "1066",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "1216.1",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "GZJQFVJHEM",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "395",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "4519.1",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "VAWGSVOGTJ",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "11",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": null,
+  "automation_score": null,
+  "response_time_score": null,
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "XFEQYXWWMZ",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "35607",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "1223.2",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "RDAHQTCOIN",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "37627",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "1889.2",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "HRCEWEYJTV",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "56498",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "2047.6",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "ZYVGSWSVPC",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "64789",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": null,
+  "automation_score": null,
+  "response_time_score": null,
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "CBNPQQCFAP",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "55977",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "4118.0",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "CRJLXSDIJC",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "140195",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "3702.6",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "ARUDSUYENB",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "89638",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "2621.2",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "TVFYAJDEGI",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "66150",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": null,
+  "automation_score": null,
+  "response_time_score": null,
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "CNNTRNZURH",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "202766",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "208.0",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "LYJNAWODKN",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "47927",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "951.9",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "VZWDYRFRSB",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "41017",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "4402.5",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "NLPEPTPJXQ",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "4212",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "1284.1",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "TSJBROFBFA",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "145364",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "1135.7",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "SCBDNBQMDL",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "66099",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "0.4",
+  "automation_score": null,
+  "response_time_score": "99.2",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "KLJCVNKTEN",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "51748",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "61.1",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "YZHRPFSXOB",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "94043",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "305.2",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "XQRFVOMUNU",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "61314",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "349.7",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "XTBVCRYMAP",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "61056",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "853.3",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "GPYLGJNWSO",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "59058",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "99.2",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "BPOCLMSUXC",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "75105",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "542.8",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "EPIRXHWVDD",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "29453",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "1847.8",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "DHJKHSWJXB",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "60284",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "124.0",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "AZJGCERFVF",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "126948",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "468.9",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "OBHLYYMRKE",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "63411",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "867.8",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "LVVKBLHJNJ",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "78060",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "612.4",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "FCABAVOXAB",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "58111",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "600.5",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "UMYSFCPZBA",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "70379",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "434.0",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "JZNLKGTWWO",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "31448",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "90.8",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "AZEJQUWVPL",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "46853",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "4004.3",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "AVAQUELSAG",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "71997",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "32.0",
+  "automation_score": null,
+  "response_time_score": "36.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "LZGGRWMKCH",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "54985",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "561.0",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "GQECZXECJA",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "138186",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "2692.3",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "JVBCXAHMTA",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "76147",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "775.6",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "NTLUAJXOWU",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "89666",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "2351.8",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "FTXDWVWZHO",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "39842",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "1881.5",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "RZWZSKJAZN",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "57861",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "95.3",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "TKQMBWJXJV",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "40119",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "247.8",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "VULYUUFNZX",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "44800",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "1154.0",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "PSYXUEIMXM",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "58413",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "2261.7",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "ICLBALBLIP",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "53731",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "720.3",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "HSGLTPBDHK",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "65377",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "1045.9",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "LYSGFRAVKS",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "39978",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "591.7",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "APWOVVLKMP",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "85163",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "670.9",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "QHKXUVXSUO",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "1004",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "1127.2",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "MMYEEJPCMJ",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "63356",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "1070.3",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "NNZVGSCXQK",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "211097",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "207.6",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "YOMFNPKSTB",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "29",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": null,
+  "automation_score": null,
+  "response_time_score": null,
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "MLEFLDPQWH",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "108043",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "960.9",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "FOGTMZQIRA",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "52159",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "409.9",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "UVXDNPRUZG",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "97148",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "495.3",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "NFSFAYRYSF",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "58772",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "126.8",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "OAIAJTZYBP",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "65431",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "0.2",
+  "automation_score": null,
+  "response_time_score": "99.6",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "JGZKAWXENY",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "86288",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "2365.1",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "HIFUWPNYJN",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "54109",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "699.0",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "IXWGBBFHRY",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "110144",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "1030.7",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "TFTBWWNDNM",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "55497",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "238.6",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "VIVOHYQVFP",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "15607",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "1690.0",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "DNBRMTUREY",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "65453",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": null,
+  "automation_score": null,
+  "response_time_score": null,
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "UNGOSUOOLE",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "117090",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "2076.9",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "GCRDQFHDHY",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "64369",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "2951.7",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "WXLIPRXTUU",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "64741",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "77.5",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "ACNOEJLPVL",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "65871",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "1340.3",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "OJMRREAHVV",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "42264",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "497.4",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "KNXJYXDQJV",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "59678",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "7825.1",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "LDMFWCTQQW",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "46773",
+  "automation_rate_percent": null,
+  "avg_first_response_time_min": "1732.1",
+  "automation_score": null,
+  "response_time_score": "0.0",
+  "health_score": null,
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "HURULIVVED",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "76659",
+  "automation_rate_percent": "0.00099140348817490444",
+  "avg_first_response_time_min": "422.4",
+  "automation_score": "0.0014871052322623568",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "WQTQZHKEJJ",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "77396",
+  "automation_rate_percent": "0.0011111685358416456",
+  "avg_first_response_time_min": "379.7",
+  "automation_score": "0.0016667528037624686",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "VSDCYNHMUB",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "68124",
+  "automation_rate_percent": "0.0010568962480183195",
+  "avg_first_response_time_min": "306.1",
+  "automation_score": "0.0015853443720274794",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "RPGVWZVFXA",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "116169",
+  "automation_rate_percent": "0.51925212406063581",
+  "avg_first_response_time_min": "2538.1",
+  "automation_score": "0.77887818609095372",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "OFFSWRVCMS",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "61883",
+  "automation_rate_percent": "0.00276327909118821",
+  "avg_first_response_time_min": "2576.6",
+  "automation_score": "0.0041449186367823153",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "EDJARWZQSF",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "44576",
+  "automation_rate_percent": "0.0025125628140703518",
+  "avg_first_response_time_min": "1225.0",
+  "automation_score": "0.0037688442211055275",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "APURXJUYSH",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "77168",
+  "automation_rate_percent": "0.0081899232842629066",
+  "avg_first_response_time_min": "3487.0",
+  "automation_score": "0.01228488492639436",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "CMEPIPAFGF",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "91645",
+  "automation_rate_percent": "0.0012657537236073981",
+  "avg_first_response_time_min": "642.0",
+  "automation_score": "0.0018986305854110971",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "IGAKARMHGV",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "45005",
+  "automation_rate_percent": "0.031263192978557938",
+  "avg_first_response_time_min": "907.6",
+  "automation_score": "0.046894789467836907",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "LGODSTIPNC",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "62414",
+  "automation_rate_percent": "0.0040375556766110172",
+  "avg_first_response_time_min": "2404.2",
+  "automation_score": "0.0060563335149165258",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "SNDAKIGEHH",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "41221",
+  "automation_rate_percent": "0.069066737827806216",
+  "avg_first_response_time_min": "602.2",
+  "automation_score": "0.10360010674170933",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "ZPQEGBPLNB",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "28784",
+  "automation_rate_percent": "0.032448582545858813",
+  "avg_first_response_time_min": "440.2",
+  "automation_score": "0.048672873818788223",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "IEJRQVUTUK",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "37457",
+  "automation_rate_percent": "0.10636196171610113",
+  "avg_first_response_time_min": "247.4",
+  "automation_score": "0.15954294257415169",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "RDHSEBZETR",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "96869",
+  "automation_rate_percent": "0.036482259546397715",
+  "avg_first_response_time_min": "289.2",
+  "automation_score": "0.054723389319596569",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "TRGHELZZSL",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "64639",
+  "automation_rate_percent": "0.1215365336716224",
+  "avg_first_response_time_min": "427.3",
+  "automation_score": "0.18230480050743358",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "VKFSCUGMPC",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "68051",
+  "automation_rate_percent": "0.1552659035135413",
+  "avg_first_response_time_min": "539.2",
+  "automation_score": "0.23289885527031196",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "CRDVTGTDVY",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "90155",
+  "automation_rate_percent": "0.36401752537296878",
+  "avg_first_response_time_min": "714.5",
+  "automation_score": "0.54602628805945319",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "GVIEAVHYQF",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "195918",
+  "automation_rate_percent": "0.29362794638573281",
+  "avg_first_response_time_min": "1108.0",
+  "automation_score": "0.44044191957859924",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "ZHJIEPMSBR",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "43530",
+  "automation_rate_percent": "0.46459912703882378",
+  "avg_first_response_time_min": "207.5",
+  "automation_score": "0.69689869055823572",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "UBINXHFOSG",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "38022",
+  "automation_rate_percent": "0.0088632896743990313",
+  "avg_first_response_time_min": "1014.5",
+  "automation_score": "0.013294934511598546",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "QAQTKLRRPQ",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "46424",
+  "automation_rate_percent": "0.10214544201275202",
+  "avg_first_response_time_min": "813.2",
+  "automation_score": "0.15321816301912805",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "IXCQDNGVTQ",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "89421",
+  "automation_rate_percent": "0.20524261638764943",
+  "avg_first_response_time_min": "11819.1",
+  "automation_score": "0.30786392458147416",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "YWGLLXOOFS",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "59716",
+  "automation_rate_percent": "0.3109551878893429",
+  "avg_first_response_time_min": "170.4",
+  "automation_score": "0.46643278183401438",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "UBBJOKKOXH",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "56461",
+  "automation_rate_percent": "0.26644940755565788",
+  "avg_first_response_time_min": "1340.6",
+  "automation_score": "0.39967411133348685",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "BZTIQJDRTJ",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "42634",
+  "automation_rate_percent": "0.11101468311676127",
+  "avg_first_response_time_min": "299.1",
+  "automation_score": "0.16652202467514191",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "OJHIZSPDVH",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "41245",
+  "automation_rate_percent": "0.15902533640441266",
+  "avg_first_response_time_min": "294.7",
+  "automation_score": "0.238538004606619",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "RHRNNFINAL",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "42095",
+  "automation_rate_percent": "0.077657679059270693",
+  "avg_first_response_time_min": "470.9",
+  "automation_score": "0.11648651858890605",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "VXYSPSQDTU",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "70907",
+  "automation_rate_percent": "0.2479726966307981",
+  "avg_first_response_time_min": "797.4",
+  "automation_score": "0.37195904494619714",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "GTZGTCPAJP",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "79992",
+  "automation_rate_percent": "0.3379212921292129",
+  "avg_first_response_time_min": "367.9",
+  "automation_score": "0.50688193819381933",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "XCZLHQROSF",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "54407",
+  "automation_rate_percent": "0.12378921829911592",
+  "avg_first_response_time_min": "895.9",
+  "automation_score": "0.18568382744867387",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "WLCGVMIVCM",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "73423",
+  "automation_rate_percent": "0.30994375059586232",
+  "avg_first_response_time_min": "1430.3",
+  "automation_score": "0.46491562589379348",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "VOKVEQVIYM",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "100997",
+  "automation_rate_percent": "0.0033763379110270603",
+  "avg_first_response_time_min": "565.5",
+  "automation_score": "0.0050645068665405909",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "DTDGCOZPUI",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "41544",
+  "automation_rate_percent": "0.49939822838436354",
+  "avg_first_response_time_min": "153.3",
+  "automation_score": "0.74909734257654526",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "KWENOWIRCM",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "105716",
+  "automation_rate_percent": "0.1225263914639222",
+  "avg_first_response_time_min": "1994.9",
+  "automation_score": "0.18378958719588331",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "SHVROWGHKC",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "93418",
+  "automation_rate_percent": "0.000599456207583121",
+  "avg_first_response_time_min": "282.6",
+  "automation_score": "0.00089918431137468149",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "SEFEHKGQFM",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "64451",
+  "automation_rate_percent": "0.436843493506695",
+  "avg_first_response_time_min": "321.6",
+  "automation_score": "0.65526524026004251",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "RRXHRPJTDU",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "118889",
+  "automation_rate_percent": "0.11624288201599811",
+  "avg_first_response_time_min": "392.2",
+  "automation_score": "0.17436432302399718",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "ZJPQSHJLNY",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "31833",
+  "automation_rate_percent": "0.12232588822919611",
+  "avg_first_response_time_min": "2734.0",
+  "automation_score": "0.18348883234379418",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "COHQFNFPHS",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "87127",
+  "automation_rate_percent": "0.15114717596152744",
+  "avg_first_response_time_min": "835.2",
+  "automation_score": "0.22672076394229115",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "EEPHURGEEO",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "63220",
+  "automation_rate_percent": "0.094922492881999374",
+  "avg_first_response_time_min": "175.0",
+  "automation_score": "0.14238373932299905",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "TXQQMNVWOO",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "53098",
+  "automation_rate_percent": "0.64802817431918336",
+  "avg_first_response_time_min": "87.6",
+  "automation_score": "0.972042261478775",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "FAPGNBIPBB",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "68759",
+  "automation_rate_percent": "0.092322459605288038",
+  "avg_first_response_time_min": "2572.0",
+  "automation_score": "0.13848368940793204",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "IQCRSWWBIV",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "49170",
+  "automation_rate_percent": "0.09231238560097621",
+  "avg_first_response_time_min": "513.1",
+  "automation_score": "0.13846857840146432",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "DKRATMBUXJ",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "58659",
+  "automation_rate_percent": "0.54648050597521269",
+  "avg_first_response_time_min": "242.4",
+  "automation_score": "0.819720758962819",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "QUQZMJPENP",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "42840",
+  "automation_rate_percent": "0.438422035480859",
+  "avg_first_response_time_min": "1009.7",
+  "automation_score": "0.65763305322128851",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "RFNNWTQEWC",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "54989",
+  "automation_rate_percent": "0.032170070377711905",
+  "avg_first_response_time_min": "607.9",
+  "automation_score": "0.048255105566567855",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "UXSNYSVJSV",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "74512",
+  "automation_rate_percent": "0.1936198196263689",
+  "avg_first_response_time_min": "283.5",
+  "automation_score": "0.29042972943955336",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "URLFCWVUHE",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "53010",
+  "automation_rate_percent": "0.36602527824938691",
+  "avg_first_response_time_min": "579.6",
+  "automation_score": "0.54903791737408036",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "SNONJZNXTN",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "49793",
+  "automation_rate_percent": "0.16914024059606772",
+  "avg_first_response_time_min": "689.9",
+  "automation_score": "0.25371036089410159",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "TOCWOPLFBH",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "47873",
+  "automation_rate_percent": "0.0034466191799135213",
+  "avg_first_response_time_min": "732.8",
+  "automation_score": "0.005169928769870282",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "UYLIVKMXVQ",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "26236",
+  "automation_rate_percent": "0.23913706357676476",
+  "avg_first_response_time_min": "169.9",
+  "automation_score": "0.35870559536514712",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "RZTJCZKUTA",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "67719",
+  "automation_rate_percent": "0.29378756331310268",
+  "avg_first_response_time_min": "829.0",
+  "automation_score": "0.44068134496965405",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "GRJIMXUCEV",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "26340",
+  "automation_rate_percent": "0.049582384206529995",
+  "avg_first_response_time_min": "773.0",
+  "automation_score": "0.074373576309794992",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "MOVTCDCZFA",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "47318",
+  "automation_rate_percent": "0.53858996576355722",
+  "avg_first_response_time_min": "99.7",
+  "automation_score": "0.80788494864533589",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "LPNGPCUPNH",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "37460",
+  "automation_rate_percent": "0.19337960491190603",
+  "avg_first_response_time_min": "1537.4",
+  "automation_score": "0.290069407367859",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "MIDWAEVLYL",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "91657",
+  "automation_rate_percent": "0.12772619658073034",
+  "avg_first_response_time_min": "841.1",
+  "automation_score": "0.19158929487109549",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "SYYWAJSJSF",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "55632",
+  "automation_rate_percent": "0.19943557664653436",
+  "avg_first_response_time_min": "1683.7",
+  "automation_score": "0.29915336496980155",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "HPYGUIYQVX",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "86312",
+  "automation_rate_percent": "0.53306608582815829",
+  "avg_first_response_time_min": "128.3",
+  "automation_score": "0.79959912874223749",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "NRZGVSVGDM",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "38485",
+  "automation_rate_percent": "0.38240873067428871",
+  "avg_first_response_time_min": "345.1",
+  "automation_score": "0.57361309601143307",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "YNXCZYQZHF",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "31981",
+  "automation_rate_percent": "0.51924580219505334",
+  "avg_first_response_time_min": "363.5",
+  "automation_score": "0.77886870329258007",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "CBVQEOMNKK",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "69659",
+  "automation_rate_percent": "0.35902037066280024",
+  "avg_first_response_time_min": "381.6",
+  "automation_score": "0.53853055599420041",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "DIWBAVOEIZ",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "24579",
+  "automation_rate_percent": "0.059359615932299929",
+  "avg_first_response_time_min": "2243.3",
+  "automation_score": "0.08903942389844989",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "SLTLNKKEAE",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "66524",
+  "automation_rate_percent": "0.53428837712705191",
+  "avg_first_response_time_min": "460.3",
+  "automation_score": "0.80143256569057786",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "BRNVLDPLKN",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "49853",
+  "automation_rate_percent": "0.16374139971516258",
+  "avg_first_response_time_min": "68.4",
+  "automation_score": "0.24561209957274388",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "SIJNDOZFQS",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "52680",
+  "automation_rate_percent": "0.11892558845861807",
+  "avg_first_response_time_min": "191.2",
+  "automation_score": "0.17838838268792712",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "DOXSDCQERE",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "149504",
+  "automation_rate_percent": "0.093683112157534248",
+  "avg_first_response_time_min": "947.5",
+  "automation_score": "0.14052466823630139",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "GCZGLCAQSF",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "47869",
+  "automation_rate_percent": "0.091833963525454892",
+  "avg_first_response_time_min": "1107.6",
+  "automation_score": "0.13775094528818232",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "AFONZJXBJC",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "72964",
+  "automation_rate_percent": "0.61169892001535009",
+  "avg_first_response_time_min": "126.3",
+  "automation_score": "0.91754838002302508",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "KFLGJHTUHT",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "94568",
+  "automation_rate_percent": "0.057873699348616865",
+  "avg_first_response_time_min": "417.1",
+  "automation_score": "0.0868105490229253",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "AXEHVCRYWU",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "167031",
+  "automation_rate_percent": "0.074794499224694819",
+  "avg_first_response_time_min": "4427.4",
+  "automation_score": "0.11219174883704222",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "ZIBTDYSXBF",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "186752",
+  "automation_rate_percent": "0.29922571110349555",
+  "avg_first_response_time_min": "390.0",
+  "automation_score": "0.44883856665524335",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "EEUCIYPKFT",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "69833",
+  "automation_rate_percent": "0.51816476450961579",
+  "avg_first_response_time_min": "258.2",
+  "automation_score": "0.77724714676442375",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "ITMFAPOFRG",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "46941",
+  "automation_rate_percent": "0.17392045333503761",
+  "avg_first_response_time_min": "220.0",
+  "automation_score": "0.26088068000255643",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "KUBHAVQTMY",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "73857",
+  "automation_rate_percent": "0.39950173984862641",
+  "avg_first_response_time_min": "87.1",
+  "automation_score": "0.59925260977293959",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "XAPQCFQRMN",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "58282",
+  "automation_rate_percent": "0.09958477746130881",
+  "avg_first_response_time_min": "70.5",
+  "automation_score": "0.14937716619196323",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "BSGLCDKCFW",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "158004",
+  "automation_rate_percent": "0.21464013569276727",
+  "avg_first_response_time_min": "673.1",
+  "automation_score": "0.32196020353915089",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "APCGHZRDED",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "62461",
+  "automation_rate_percent": "0.23669169561806566",
+  "avg_first_response_time_min": "366.7",
+  "automation_score": "0.35503754342709848",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "ALEZQBQMFC",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "60852",
+  "automation_rate_percent": "0.40836784329192138",
+  "avg_first_response_time_min": "167.3",
+  "automation_score": "0.6125517649378821",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "XZOTYGMEJN",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "58552",
+  "automation_rate_percent": "0.1795156442136904",
+  "avg_first_response_time_min": "160.0",
+  "automation_score": "0.26927346632053561",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "HTLJBGIIGO",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "55953",
+  "automation_rate_percent": "0.34557575107679661",
+  "avg_first_response_time_min": "247.2",
+  "automation_score": "0.518363626615195",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "GHQONDBLIJ",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "101163",
+  "automation_rate_percent": "0.28420469934659903",
+  "avg_first_response_time_min": "1001.2",
+  "automation_score": "0.42630704901989858",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "HRBQHDEANK",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "128180",
+  "automation_rate_percent": "0.13797784365735685",
+  "avg_first_response_time_min": "794.7",
+  "automation_score": "0.20696676548603526",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "LHLHQSYRMY",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "53876",
+  "automation_rate_percent": "0.52654243076694629",
+  "avg_first_response_time_min": "264.6",
+  "automation_score": "0.78981364615041949",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "VRKPBLGXRU",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "248931",
+  "automation_rate_percent": "0.069910939175916217",
+  "avg_first_response_time_min": "5209.1",
+  "automation_score": "0.10486640876387432",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "PPASJCJAJF",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "45208",
+  "automation_rate_percent": "0.011104229339939833",
+  "avg_first_response_time_min": "174.1",
+  "automation_score": "0.01665634400990975",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "KOJAUYXWYC",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "53075",
+  "automation_rate_percent": "0.23913330193122939",
+  "avg_first_response_time_min": "383.1",
+  "automation_score": "0.35869995289684409",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "MVLSYDWPRI",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "132685",
+  "automation_rate_percent": "0.080069337151901121",
+  "avg_first_response_time_min": "2368.3",
+  "automation_score": "0.12010400572785168",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "VTGSARMREV",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "89344",
+  "automation_rate_percent": "0.10936380730659026",
+  "avg_first_response_time_min": "2731.2",
+  "automation_score": "0.1640457109598854",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "YEBZGZASPE",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "72088",
+  "automation_rate_percent": "0.0029685939407390967",
+  "avg_first_response_time_min": "889.5",
+  "automation_score": "0.0044528909111086453",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "MZWFIOXAPY",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "34266",
+  "automation_rate_percent": "0.22474172649273333",
+  "avg_first_response_time_min": "261.2",
+  "automation_score": "0.33711258973909997",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "MWKVZBNMDX",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "98516",
+  "automation_rate_percent": "0.24911689471760931",
+  "avg_first_response_time_min": "2469.0",
+  "automation_score": "0.37367534207641395",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "KHFJAYHDAY",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "61534",
+  "automation_rate_percent": "0.10482009945721064",
+  "avg_first_response_time_min": "92.1",
+  "automation_score": "0.15723014918581596",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "YZQBIOJFJM",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "90162",
+  "automation_rate_percent": "6.6546882278565252e-05",
+  "avg_first_response_time_min": "2977.5",
+  "automation_score": "9.9820323417847872e-05",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "OXNOSFEICA",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "53242",
+  "automation_rate_percent": "0.09770481950339957",
+  "avg_first_response_time_min": "249.9",
+  "automation_score": "0.14655722925509934",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "VAVITHSJPT",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "43438",
+  "automation_rate_percent": "0.25772365210184633",
+  "avg_first_response_time_min": "173.3",
+  "automation_score": "0.3865854781527695",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "QHMJMDLXCQ",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "60632",
+  "automation_rate_percent": "0.38311452698245152",
+  "avg_first_response_time_min": "126.3",
+  "automation_score": "0.57467179047367734",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "XGVGJOXKRA",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "58805",
+  "automation_rate_percent": "0.41476064960462544",
+  "avg_first_response_time_min": "232.4",
+  "automation_score": "0.62214097440693816",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "YPHXRDWXTO",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "43047",
+  "automation_rate_percent": "0.022301205658930935",
+  "avg_first_response_time_min": "1662.7",
+  "automation_score": "0.033451808488396406",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "JNSKRHALSR",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "56084",
+  "automation_rate_percent": "0.368928749732544",
+  "avg_first_response_time_min": "217.7",
+  "automation_score": "0.55339312459881607",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "TWNDMFKMNM",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "108019",
+  "automation_rate_percent": "0.00038882048528499617",
+  "avg_first_response_time_min": "442.6",
+  "automation_score": "0.00058323072792749423",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "BLSOJOHZVB",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "51603",
+  "automation_rate_percent": "0.554405751603589",
+  "avg_first_response_time_min": "375.1",
+  "automation_score": "0.83160862740538344",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "YMGRJUNKXG",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "38690",
+  "automation_rate_percent": "0.19630395451020935",
+  "avg_first_response_time_min": "1688.1",
+  "automation_score": "0.29445593176531404",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "RNFEKRWNBX",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "71712",
+  "automation_rate_percent": "0.11317492190986167",
+  "avg_first_response_time_min": "2335.9",
+  "automation_score": "0.1697623828647925",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "YEDDCAFJNG",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "46729",
+  "automation_rate_percent": "0.19448308331015002",
+  "avg_first_response_time_min": "385.8",
+  "automation_score": "0.291724624965225",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "SOIHGCRXXY",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "60844",
+  "automation_rate_percent": "0.65045033199658142",
+  "avg_first_response_time_min": "132.0",
+  "automation_score": "0.97567549799487208",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "LHUEPUBIYG",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "60851",
+  "automation_rate_percent": "0.18545299173390742",
+  "avg_first_response_time_min": "649.6",
+  "automation_score": "0.27817948760086114",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "CKTMWSSFEL",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "69689",
+  "automation_rate_percent": "0.25732899022801303",
+  "avg_first_response_time_min": "811.7",
+  "automation_score": "0.38599348534201955",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "ABCXWTMQZJ",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "42056",
+  "automation_rate_percent": "0.33493437321666347",
+  "avg_first_response_time_min": "103.5",
+  "automation_score": "0.50240155982499524",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "UFIJXVZDMN",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "213848",
+  "automation_rate_percent": "0.60492031723467132",
+  "avg_first_response_time_min": "247.9",
+  "automation_score": "0.907380475852007",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "VPMAHBCKRS",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "70157",
+  "automation_rate_percent": "0.24103083085080604",
+  "avg_first_response_time_min": "762.4",
+  "automation_score": "0.36154624627620907",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "SMNDLSVRDU",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "179731",
+  "automation_rate_percent": "0.12099192682397583",
+  "avg_first_response_time_min": "243.8",
+  "automation_score": "0.18148789023596373",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "BDPAMWLXFZ",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "106047",
+  "automation_rate_percent": "0.2217224438220789",
+  "avg_first_response_time_min": "1627.7",
+  "automation_score": "0.33258366573311837",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "TDPFKQHPXQ",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "44748",
+  "automation_rate_percent": "0.010369178510771432",
+  "avg_first_response_time_min": "148.9",
+  "automation_score": "0.015553767766157148",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "LKHUXWQCQH",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "87099",
+  "automation_rate_percent": "0.3110024225306835",
+  "avg_first_response_time_min": "415.2",
+  "automation_score": "0.46650363379602522",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "LMAIGOMUZG",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "58646",
+  "automation_rate_percent": "0.27234594004706203",
+  "avg_first_response_time_min": "481.0",
+  "automation_score": "0.40851891007059304",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "LHSTIRFOES",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "108110",
+  "automation_rate_percent": "0.28190731662195911",
+  "avg_first_response_time_min": "690.7",
+  "automation_score": "0.42286097493293867",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "HTGHRNUZCT",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "68237",
+  "automation_rate_percent": "0.0057300291630640269",
+  "avg_first_response_time_min": "641.9",
+  "automation_score": "0.0085950437445960412",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "UTXRINHRYQ",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "80214",
+  "automation_rate_percent": "0.48689754905627447",
+  "avg_first_response_time_min": "2652.2",
+  "automation_score": "0.73034632358441165",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "EFXZVRCRKI",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "34659",
+  "automation_rate_percent": "0.19602412071900516",
+  "avg_first_response_time_min": "1458.0",
+  "automation_score": "0.29403618107850771",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "NVJOEPKJHG",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "199856",
+  "automation_rate_percent": "0.53469998398847174",
+  "avg_first_response_time_min": "440.8",
+  "automation_score": "0.80204997598270755",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "AIOFHQWURK",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "47884",
+  "automation_rate_percent": "0.29824158382758331",
+  "avg_first_response_time_min": "114.1",
+  "automation_score": "0.44736237574137494",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "USKDJHBPBK",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "67857",
+  "automation_rate_percent": "0.056707487805237482",
+  "avg_first_response_time_min": "4440.3",
+  "automation_score": "0.085061231707856219",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "GXHKYDMAAG",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "106537",
+  "automation_rate_percent": "0.54002834695927238",
+  "avg_first_response_time_min": "293.1",
+  "automation_score": "0.81004252043890856",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "OZKWBQSGTP",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "47311",
+  "automation_rate_percent": "0.086639470736192423",
+  "avg_first_response_time_min": "1745.0",
+  "automation_score": "0.12995920610428863",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "MJYGRLKWYP",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "73714",
+  "automation_rate_percent": "0.18779336354016876",
+  "avg_first_response_time_min": "529.4",
+  "automation_score": "0.28169004531025316",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "JNCOUCEGLN",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "51281",
+  "automation_rate_percent": "0.090033345683586508",
+  "avg_first_response_time_min": "1468.5",
+  "automation_score": "0.13505001852537976",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "LOKFJJDSOR",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "86396",
+  "automation_rate_percent": "0.16185934534006205",
+  "avg_first_response_time_min": "927.7",
+  "automation_score": "0.24278901801009306",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "ABRHKCCIKY",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "44712",
+  "automation_rate_percent": "0.10985865092145286",
+  "avg_first_response_time_min": "3332.1",
+  "automation_score": "0.16478797638217929",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "RBDXNRTCEU",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "68551",
+  "automation_rate_percent": "0.18294408542544965",
+  "avg_first_response_time_min": "595.3",
+  "automation_score": "0.27441612813817451",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "ROODFNYDJC",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "65585",
+  "automation_rate_percent": "0.0901120683083022",
+  "avg_first_response_time_min": "1463.8",
+  "automation_score": "0.13516810246245331",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "MQTCVRVKOK",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "123040",
+  "automation_rate_percent": "0.33982444733420025",
+  "avg_first_response_time_min": "429.9",
+  "automation_score": "0.50973667100130038",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "ZLPBTPFHXT",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "225636",
+  "automation_rate_percent": "0.53391302806289775",
+  "avg_first_response_time_min": "332.4",
+  "automation_score": "0.80086954209434658",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "CEXVKKNMFR",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "64924",
+  "automation_rate_percent": "0.17118476988478837",
+  "avg_first_response_time_min": "775.0",
+  "automation_score": "0.25677715482718255",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "XPIOENRCIQ",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "119654",
+  "automation_rate_percent": "0.4570678790512645",
+  "avg_first_response_time_min": "694.4",
+  "automation_score": "0.68560181857689673",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "NGDFIBYREX",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "179695",
+  "automation_rate_percent": "0.27611230139959375",
+  "avg_first_response_time_min": "135.0",
+  "automation_score": "0.41416845209939063",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "HACRIEJHZP",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "54977",
+  "automation_rate_percent": "0.18762391545555415",
+  "avg_first_response_time_min": "508.4",
+  "automation_score": "0.28143587318333124",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "MSESCIQCAD",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "63669",
+  "automation_rate_percent": "0.5597229420911275",
+  "avg_first_response_time_min": "81.9",
+  "automation_score": "0.83958441313669119",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "ULNYEILRBF",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "165671",
+  "automation_rate_percent": "0.20795431910231724",
+  "avg_first_response_time_min": "147.2",
+  "automation_score": "0.31193147865347587",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "VBJYYKREUF",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "86206",
+  "automation_rate_percent": "0.37910354267684382",
+  "avg_first_response_time_min": "735.1",
+  "automation_score": "0.5686553140152657",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "IYKICTRLPC",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "38244",
+  "automation_rate_percent": "0.17602761217445873",
+  "avg_first_response_time_min": "226.4",
+  "automation_score": "0.26404141826168809",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "OKKOKZKZSA",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "91399",
+  "automation_rate_percent": "0.30738848346261993",
+  "avg_first_response_time_min": "422.6",
+  "automation_score": "0.4610827251939299",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "XWOEEQPZIR",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "102679",
+  "automation_rate_percent": "0.40510717868308027",
+  "avg_first_response_time_min": "2552.8",
+  "automation_score": "0.60766076802462043",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "TOOELWQDUH",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "62623",
+  "automation_rate_percent": "0.074892611340881141",
+  "avg_first_response_time_min": "789.3",
+  "automation_score": "0.1123389170113217",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "ZUIXKNJIBZ",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "178620",
+  "automation_rate_percent": "0.0433098197290337",
+  "avg_first_response_time_min": "2304.4",
+  "automation_score": "0.064964729593550555",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "GHEIMVUUGP",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "60225",
+  "automation_rate_percent": "0.075666251556662512",
+  "avg_first_response_time_min": "1879.9",
+  "automation_score": "0.11349937733499377",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "WBMXIOWPCC",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "53422",
+  "automation_rate_percent": "0.17314963872561867",
+  "avg_first_response_time_min": "538.9",
+  "automation_score": "0.25972445808842803",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "JHTVTKOJSL",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "60410",
+  "automation_rate_percent": "0.553898361198477",
+  "avg_first_response_time_min": "173.8",
+  "automation_score": "0.83084754179771547",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "RVRBRXMSDW",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "60134",
+  "automation_rate_percent": "0.057721089566634513",
+  "avg_first_response_time_min": "417.5",
+  "automation_score": "0.086581634349951767",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "YSLBBHYYUH",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "93282",
+  "automation_rate_percent": "0.234954224823653",
+  "avg_first_response_time_min": "366.9",
+  "automation_score": "0.35243133723547948",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "EUEFRNFIHD",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "201969",
+  "automation_rate_percent": "0.56584426322851522",
+  "avg_first_response_time_min": "264.6",
+  "automation_score": "0.84876639484277283",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "VSUNBNNAOO",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "89616",
+  "automation_rate_percent": "0.22429030530262453",
+  "avg_first_response_time_min": "224.0",
+  "automation_score": "0.33643545795393681",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "JYECCHNSBQ",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "57640",
+  "automation_rate_percent": "0.055274115197779319",
+  "avg_first_response_time_min": "173.3",
+  "automation_score": "0.082911172796668986",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "HJMTNQMOCW",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "72515",
+  "automation_rate_percent": "0.26063573053850925",
+  "avg_first_response_time_min": "109.7",
+  "automation_score": "0.3909535958077639",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "XAVQLKOEDD",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "32592",
+  "automation_rate_percent": "0.53795409916543935",
+  "avg_first_response_time_min": "505.1",
+  "automation_score": "0.806931148748159",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "CHYZXUVNET",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "44303",
+  "automation_rate_percent": "0.067738076428232846",
+  "avg_first_response_time_min": "1487.4",
+  "automation_score": "0.10160711464234927",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "GCGFHYCOSW",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "71913",
+  "automation_rate_percent": "0.031607637005826486",
+  "avg_first_response_time_min": "1434.8",
+  "automation_score": "0.047411455508739729",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "LDOLDIYRNR",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "62757",
+  "automation_rate_percent": "0.28087703363768185",
+  "avg_first_response_time_min": "222.8",
+  "automation_score": "0.4213155504565228",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "DEPNLUWGVN",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "163906",
+  "automation_rate_percent": "0.10894659133893818",
+  "avg_first_response_time_min": "1770.5",
+  "automation_score": "0.16341988700840726",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "YDLQPQXPMD",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "43913",
+  "automation_rate_percent": "0.40040534693598706",
+  "avg_first_response_time_min": "174.3",
+  "automation_score": "0.60060802040398054",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "FIQQOVZEDH",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "58979",
+  "automation_rate_percent": "0.024195052476305125",
+  "avg_first_response_time_min": "1664.1",
+  "automation_score": "0.036292578714457686",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "UETJRQFYOZ",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "50292",
+  "automation_rate_percent": "0.31971287679949095",
+  "avg_first_response_time_min": "457.1",
+  "automation_score": "0.4795693151992364",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "UACTRTHZPF",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "85396",
+  "automation_rate_percent": "0.31859806079910064",
+  "avg_first_response_time_min": "978.9",
+  "automation_score": "0.477897091198651",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "KGECQSNMZB",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "50714",
+  "automation_rate_percent": "0.26619868280948061",
+  "avg_first_response_time_min": "416.2",
+  "automation_score": "0.39929802421422089",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "WKVBUDFWDU",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "102214",
+  "automation_rate_percent": "0.0045003619856379753",
+  "avg_first_response_time_min": "2618.3",
+  "automation_score": "0.006750542978456963",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "MIQRPHSVZW",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "54394",
+  "automation_rate_percent": "0.22478582196565797",
+  "avg_first_response_time_min": "75.7",
+  "automation_score": "0.33717873294848694",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "KHOUYINUTB",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "59190",
+  "automation_rate_percent": "0.63348538604494",
+  "avg_first_response_time_min": "468.7",
+  "automation_score": "0.95022807906741",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "AQJSWXVHHN",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "59745",
+  "automation_rate_percent": "0.16714369403297347",
+  "avg_first_response_time_min": "417.0",
+  "automation_score": "0.2507155410494602",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "RKNDYGFPJY",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "61925",
+  "automation_rate_percent": "0.0037141703673798949",
+  "avg_first_response_time_min": "946.2",
+  "automation_score": "0.0055712555510698423",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "UXGGHHABUV",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "50222",
+  "automation_rate_percent": "0.17818884154354667",
+  "avg_first_response_time_min": "478.5",
+  "automation_score": "0.26728326231532",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "AOCFHIIYHM",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "69206",
+  "automation_rate_percent": "0.37259775164003123",
+  "avg_first_response_time_min": "413.1",
+  "automation_score": "0.55889662746004687",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "RVNJJMDKAV",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "61569",
+  "automation_rate_percent": "0.13248550406860596",
+  "avg_first_response_time_min": "840.2",
+  "automation_score": "0.19872825610290895",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "XIZUQWJXZI",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "44024",
+  "automation_rate_percent": "0.0045429765582409593",
+  "avg_first_response_time_min": "283.7",
+  "automation_score": "0.006814464837361439",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "VEKUJFSXYW",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "37500",
+  "automation_rate_percent": "0.20365333333333333",
+  "avg_first_response_time_min": "245.9",
+  "automation_score": "0.30548",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "EKFVUJCFPK",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "64454",
+  "automation_rate_percent": "0.30119154746020416",
+  "avg_first_response_time_min": "1537.0",
+  "automation_score": "0.45178732119030623",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "TDDSEFNMRV",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "29862",
+  "automation_rate_percent": "0.21867256044471234",
+  "avg_first_response_time_min": "795.7",
+  "automation_score": "0.32800884066706848",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "XXIEAXYYOH",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "57866",
+  "automation_rate_percent": "0.0010368783050495973",
+  "avg_first_response_time_min": "269.5",
+  "automation_score": "0.001555317457574396",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "FZYBVRSAAF",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "113852",
+  "automation_rate_percent": "0.055387696307486911",
+  "avg_first_response_time_min": "1645.2",
+  "automation_score": "0.083081544461230367",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "GZDWMUIIDP",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "178033",
+  "automation_rate_percent": "0.13286300854335995",
+  "avg_first_response_time_min": "631.9",
+  "automation_score": "0.1992945128150399",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "DWYDFXFXNT",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "51001",
+  "automation_rate_percent": "0.10509597851022529",
+  "avg_first_response_time_min": "785.0",
+  "automation_score": "0.15764396776533793",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "OCBZXLGMTU",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "99005",
+  "automation_rate_percent": "0.22439270743901824",
+  "avg_first_response_time_min": "2025.9",
+  "automation_score": "0.33658906115852738",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "TPLCZGUDCG",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "64903",
+  "automation_rate_percent": "0.07639092183720321",
+  "avg_first_response_time_min": "216.4",
+  "automation_score": "0.11458638275580482",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "EHBSEPHRAG",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "59253",
+  "automation_rate_percent": "0.13521678227262754",
+  "avg_first_response_time_min": "430.4",
+  "automation_score": "0.20282517340894129",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "RXSABAPENO",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "74938",
+  "automation_rate_percent": "0.061504176786143214",
+  "avg_first_response_time_min": "322.9",
+  "automation_score": "0.092256265179214814",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "BRGUFDIQSS",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "135969",
+  "automation_rate_percent": "0.15664600019122005",
+  "avg_first_response_time_min": "892.5",
+  "automation_score": "0.23496900028683007",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "WTTLCSXCJD",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "196214",
+  "automation_rate_percent": "0.011619965955538341",
+  "avg_first_response_time_min": "1133.7",
+  "automation_score": "0.017429948933307512",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "ESKTUJCDLS",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "50327",
+  "automation_rate_percent": "0.41790688894629124",
+  "avg_first_response_time_min": "178.8",
+  "automation_score": "0.62686033341943692",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "BZPCBGHJMO",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "95104",
+  "automation_rate_percent": "0.013069902422611036",
+  "avg_first_response_time_min": "423.8",
+  "automation_score": "0.019604853633916553",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "RCTOUDTWBU",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "84961",
+  "automation_rate_percent": "0.29487647273454881",
+  "avg_first_response_time_min": "2220.9",
+  "automation_score": "0.44231470910182324",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "ONCYMRHMRP",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "46127",
+  "automation_rate_percent": "0.00865003143495133",
+  "avg_first_response_time_min": "2116.1",
+  "automation_score": "0.012975047152426995",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "HITJIPYCBZ",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "61533",
+  "automation_rate_percent": "0.3243950400598053",
+  "avg_first_response_time_min": "440.2",
+  "automation_score": "0.48659256008970797",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "IAXNYSZVGR",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "42112",
+  "automation_rate_percent": "0.0031819908814589666",
+  "avg_first_response_time_min": "268.2",
+  "automation_score": "0.0047729863221884494",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "ACULWGFBII",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "71058",
+  "automation_rate_percent": "0.36951504404852376",
+  "avg_first_response_time_min": "666.9",
+  "automation_score": "0.55427256607278563",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "FNILFAPUTR",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "26994",
+  "automation_rate_percent": "0.00018522634659553976",
+  "avg_first_response_time_min": "179.3",
+  "automation_score": "0.00027783951989330966",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "NQCYJXGEDJ",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "62209",
+  "automation_rate_percent": "0.31302544647880531",
+  "avg_first_response_time_min": "319.2",
+  "automation_score": "0.46953816971820794",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "QTHUPOAEST",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "58060",
+  "automation_rate_percent": "0.12580089562521529",
+  "avg_first_response_time_min": "67.3",
+  "automation_score": "0.18870134343782294",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "VECRCVNQPL",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "58185",
+  "automation_rate_percent": "0.50475208387041337",
+  "avg_first_response_time_min": "179.9",
+  "automation_score": "0.75712812580562006",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "VMWVIAADDU",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "50348",
+  "automation_rate_percent": "0.15124731866211169",
+  "avg_first_response_time_min": "423.3",
+  "automation_score": "0.22687097799316752",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "LTQEIDQOEW",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "51301",
+  "automation_rate_percent": "0.013333073429367849",
+  "avg_first_response_time_min": "257.8",
+  "automation_score": "0.019999610144051775",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "IUPXUJMFGJ",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "61538",
+  "automation_rate_percent": "0.141831063732978",
+  "avg_first_response_time_min": "671.2",
+  "automation_score": "0.212746595599467",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "RVLBBDYNCC",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "89125",
+  "automation_rate_percent": "0.39334642356241234",
+  "avg_first_response_time_min": "263.8",
+  "automation_score": "0.59001963534361845",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "UFQIJVILNQ",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "46619",
+  "automation_rate_percent": "0.23273772496192541",
+  "avg_first_response_time_min": "738.8",
+  "automation_score": "0.34910658744288814",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "IUIXVDHAYR",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "51576",
+  "automation_rate_percent": "0.350046533271289",
+  "avg_first_response_time_min": "220.9",
+  "automation_score": "0.52506979990693348",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "JSBLRJSTPU",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "84830",
+  "automation_rate_percent": "0.131014971118708",
+  "avg_first_response_time_min": "2293.7",
+  "automation_score": "0.196522456678062",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "KURVZZNIQG",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "77628",
+  "automation_rate_percent": "0.54495800484361312",
+  "avg_first_response_time_min": "287.6",
+  "automation_score": "0.81743700726541968",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "ZHUPAXWZEJ",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "29216",
+  "automation_rate_percent": "0.421960569550931",
+  "avg_first_response_time_min": "233.3",
+  "automation_score": "0.63294085432639646",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "IYQJIMLNSY",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "79045",
+  "automation_rate_percent": "0.26993484723891453",
+  "avg_first_response_time_min": "142.4",
+  "automation_score": "0.40490227085837183",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "YEAZTTDJFQ",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "104924",
+  "automation_rate_percent": "0.12638671800541343",
+  "avg_first_response_time_min": "216.8",
+  "automation_score": "0.18958007700812013",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "DDWCNGGWVX",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "129855",
+  "automation_rate_percent": "0.59898348157560355",
+  "avg_first_response_time_min": "668.6",
+  "automation_score": "0.89847522236340538",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "RVPNQTAVSY",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "72376",
+  "automation_rate_percent": "0.19932021664640212",
+  "avg_first_response_time_min": "2400.9",
+  "automation_score": "0.2989803249696032",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "UIYHNFVEZK",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "40338",
+  "automation_rate_percent": "0.41789379741186972",
+  "avg_first_response_time_min": "149.2",
+  "automation_score": "0.62684069611780457",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "HZOXPRDGXA",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "133947",
+  "automation_rate_percent": "0.11131268337476763",
+  "avg_first_response_time_min": "1575.3",
+  "automation_score": "0.16696902506215144",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "ZNRTIAHMUM",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "323171",
+  "automation_rate_percent": "0.64874632934267",
+  "avg_first_response_time_min": "30033.6",
+  "automation_score": "0.97311949401400488",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "QQTWHPQEFH",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "52243",
+  "automation_rate_percent": "0.34025611086652757",
+  "avg_first_response_time_min": "853.0",
+  "automation_score": "0.51038416629979133",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "BXOTWLSFUQ",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "72061",
+  "automation_rate_percent": "0.16685863365759565",
+  "avg_first_response_time_min": "2182.6",
+  "automation_score": "0.25028795048639346",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "DEEHRXUPMU",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "197893",
+  "automation_rate_percent": "0.11262146715649365",
+  "avg_first_response_time_min": "6314.3",
+  "automation_score": "0.16893220073474047",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "PTNEFITANG",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "56152",
+  "automation_rate_percent": "0.0024932326542242483",
+  "avg_first_response_time_min": "1757.1",
+  "automation_score": "0.0037398489813363725",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "GVPXQGLWSC",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "188876",
+  "automation_rate_percent": "0.1275334081619687",
+  "avg_first_response_time_min": "388.7",
+  "automation_score": "0.19130011224295307",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "FVXEPIKWCV",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "67377",
+  "automation_rate_percent": "0.23790017364976179",
+  "avg_first_response_time_min": "74.5",
+  "automation_score": "0.35685026047464269",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "BOXLYBSYNF",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "48803",
+  "automation_rate_percent": "0.541626539352089",
+  "avg_first_response_time_min": "1015.5",
+  "automation_score": "0.81243980902813351",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "AUGABUILOF",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "94850",
+  "automation_rate_percent": "0.013927253558249869",
+  "avg_first_response_time_min": "164.2",
+  "automation_score": "0.020890880337374802",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "UGLNNZECDP",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "68558",
+  "automation_rate_percent": "0.40520435251903497",
+  "avg_first_response_time_min": "348.3",
+  "automation_score": "0.60780652877855246",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "GOYQKMIRZC",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "147769",
+  "automation_rate_percent": "0.14933443415059991",
+  "avg_first_response_time_min": "787.8",
+  "automation_score": "0.22400165122589988",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "WHTJISDTLE",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "75744",
+  "automation_rate_percent": "0.38335709759188846",
+  "avg_first_response_time_min": "540.4",
+  "automation_score": "0.57503564638783267",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "QSEJEPKSSQ",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "27704",
+  "automation_rate_percent": "0.13232746173837712",
+  "avg_first_response_time_min": "1581.6",
+  "automation_score": "0.19849119260756568",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "IRNHOKXYED",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "89038",
+  "automation_rate_percent": "0.38035445540106472",
+  "avg_first_response_time_min": "255.0",
+  "automation_score": "0.57053168310159708",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "ORQDGVEIPJ",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "71840",
+  "automation_rate_percent": "0.22087973273942094",
+  "avg_first_response_time_min": "240.9",
+  "automation_score": "0.33131959910913139",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "APQFDEAWRH",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "92154",
+  "automation_rate_percent": "0.0061961499229550533",
+  "avg_first_response_time_min": "2901.6",
+  "automation_score": "0.00929422488443258",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "TZXGGILXAX",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "59805",
+  "automation_rate_percent": "0.24660145472786557",
+  "avg_first_response_time_min": "467.4",
+  "automation_score": "0.36990218209179837",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "BHLPPUQNIR",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "81499",
+  "automation_rate_percent": "0.50292641627504631",
+  "avg_first_response_time_min": "964.4",
+  "automation_score": "0.7543896244125694",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "ZTVQGMFVJC",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "43942",
+  "automation_rate_percent": "0.2460743707614583",
+  "avg_first_response_time_min": "283.1",
+  "automation_score": "0.36911155614218744",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "LHUDIEIATB",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "112723",
+  "automation_rate_percent": "0.45024529155540571",
+  "avg_first_response_time_min": "319.8",
+  "automation_score": "0.67536793733310851",
+  "response_time_score": "0.0",
+  "health_score": "0.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "RCJOQAKMQK",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "101128",
+  "automation_rate_percent": "0.679465627719326",
+  "avg_first_response_time_min": "199.9",
+  "automation_score": "1.019198441578989",
+  "response_time_score": "0.0",
+  "health_score": "1.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "BEIJOFAPDL",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "37614",
+  "automation_rate_percent": "0.092013611952996219",
+  "avg_first_response_time_min": "45.0",
+  "automation_score": "0.13802041792949432",
+  "response_time_score": "10.0",
+  "health_score": "5.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "WWLXQXGNLW",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "43951",
+  "automation_rate_percent": "0.099565425132533955",
+  "avg_first_response_time_min": "42.4",
+  "automation_score": "0.14934813769880093",
+  "response_time_score": "15.200000000000003",
+  "health_score": "8.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "JBFYMGVHBM",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "34939",
+  "automation_rate_percent": "0.50945934342711585",
+  "avg_first_response_time_min": "37.3",
+  "automation_score": "0.76418901514067383",
+  "response_time_score": "25.400000000000006",
+  "health_score": "13.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "JNAVGXXNJD",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "68332",
+  "automation_rate_percent": "0.47185798747292629",
+  "avg_first_response_time_min": "26.5",
+  "automation_score": "0.70778698120938943",
+  "response_time_score": "47.0",
+  "health_score": "24.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "SYOAOFFAQL",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "39657",
+  "automation_rate_percent": "0.5390977633204731",
+  "avg_first_response_time_min": "24.9",
+  "automation_score": "0.80864664498070971",
+  "response_time_score": "50.2",
+  "health_score": "26.0",
+  "health_status": "Needs Intervention"
+}, {
+  "account_name": "JRWNITZDEL",
+  "quarter_label": "2025-Q1",
+  "total_interactions": "638611",
+  "automation_rate_percent": "0.9999984341015109",
+  "avg_first_response_time_min": "0.6",
+  "automation_score": "1.4999976511522664",
+  "response_time_score": "98.8",
+  "health_score": "50.0",
+  "health_status": "At Risk"
+}, {
+  "account_name": "BCTUDHDPIR",
+  "quarter_label": "2025-Q2",
+  "total_interactions": "723910",
+  "automation_rate_percent": "0.99997237225621971",
+  "avg_first_response_time_min": "0.7",
+  "automation_score": "1.4999585583843296",
+  "response_time_score": "98.6",
+  "health_score": "50.0",
+  "health_status": "At Risk"
+}, {
+  "account_name": "UGGQYPVBEQ",
+  "quarter_label": "2025-Q4",
+  "total_interactions": "1471095",
+  "automation_rate_percent": "0.99957990476481806",
+  "avg_first_response_time_min": "0.9",
+  "automation_score": "1.4993698571472271",
+  "response_time_score": "98.2",
+  "health_score": "50.0",
+  "health_status": "At Risk"
+}, {
+  "account_name": "NPNWNGQKJM",
+  "quarter_label": "2025-Q3",
+  "total_interactions": "867101",
+  "automation_rate_percent": "0.99998846731810942",
+  "avg_first_response_time_min": "0.6",
+  "automation_score": "1.499982700977164",
+  "response_time_score": "98.8",
+  "health_score": "50.0",
+  "health_status": "At Risk"
+}]
+
+
+
+
+     ---
+     4.2 GMV Band Performance Comparison
+
+     Business Question: "Do larger merchants get better AI performance?"
+     Why Unique: Identifies if we're serving all merchant sizes equally
+
+     -- Compare AI performance across merchant tiers
+     SELECT
+       fixed_gmv_parent_band,
+       COUNT(DISTINCT account_name) as merchant_count,
+       SUM(rolling_total_tickets_28) as total_tickets,
+       SUM(rolling_ai_covered_28) as ai_covered_tickets,
+       ROUND(SAFE_DIVIDE(SUM(rolling_ai_covered_28), SUM(rolling_total_tickets_28)) * 100, 1) as resolution_rate,
+       ROUND(SAFE_DIVIDE(SUM(rolling_closed_billed_28), SUM(rolling_total_tickets_28)) * 100, 1) as closure_rate,
+       -- Is there a gap between small and large merchants?
+       ROUND(SAFE_DIVIDE(SUM(rolling_ai_covered_28), SUM(rolling_total_tickets_28)) * 100, 1) -
+         (SELECT ROUND(SAFE_DIVIDE(SUM(rolling_ai_covered_28), SUM(rolling_total_tickets_28)) * 100, 1)
+          FROM `growth-ops-recruiting.growth_marketing_recruiting.AIAgentResolutionratebyMerchantsandGMV`
+          WHERE event_date = (SELECT MAX(event_date) FROM `growth-ops-recruiting.growth_marketing_recruiting.AIAgentResolutionratebyMerchantsandGMV`)) as vs_overall_avg
+     FROM `growth-ops-recruiting.growth_marketing_recruiting.AIAgentResolutionratebyMerchantsandGMV`
+     WHERE event_date = (SELECT MAX(event_date) FROM `growth-ops-recruiting.growth_marketing_recruiting.AIAgentResolutionratebyMerchantsandGMV`)
+     GROUP BY fixed_gmv_parent_band
+     ORDER BY fixed_gmv_parent_band
+
+     Visualization: Horizontal bar chart grouped by GMV band, with benchmark line showing overall average
+     Response:
+     [{
+  "fixed_gmv_parent_band": "Commercial ($3-20m)",
+  "merchant_count": "26",
+  "total_tickets": "35343942",
+  "ai_covered_tickets": "19111420",
+  "resolution_rate": "54.1",
+  "closure_rate": "19.5",
+  "vs_overall_avg": "0.0"
+}, {
+  "fixed_gmv_parent_band": "Enterprise (\u003e$20m)",
+  "merchant_count": "26",
+  "total_tickets": "36146229",
+  "ai_covered_tickets": "19656988",
+  "resolution_rate": "54.4",
+  "closure_rate": "19.7",
+  "vs_overall_avg": "0.29999999999999716"
+}, {
+  "fixed_gmv_parent_band": "SMB (\u003c$3m)",
+  "merchant_count": "26",
+  "total_tickets": "35464505",
+  "ai_covered_tickets": "19128845",
+  "resolution_rate": "53.9",
+  "closure_rate": "19.5",
+  "vs_overall_avg": "-0.20000000000000284"
+}]
+     
+     ---
+     Insight Category 5: REVENUE ATTRIBUTION & GROWTH
+
+     5.1 AI Revenue Impact Calculator
+
+     Business Question: "How much revenue is AI directly contributing to?"
+     Why Unique: Connects support metrics to business outcomes
+
+     -- Show AI's growing contribution to GMV
+     SELECT
+       month_start,
+       gmv_influenced,
+       gmv_web as total_gmv,
+       gmv_influenced_rate as influence_rate_pct,
+       -- Cumulative metrics
+       SUM(gmv_influenced) OVER (ORDER BY month_start) as cumulative_influenced,
+       -- MoM growth
+       ROUND((gmv_influenced - LAG(gmv_influenced) OVER (ORDER BY month_start)) /
+         NULLIF(LAG(gmv_influenced) OVER (ORDER BY month_start), 0) * 100, 1) as mom_growth_pct,
+       -- Opportunity: What if influence rate increased by 1%?
+       ROUND(gmv_web * 0.01, 0) as additional_gmv_per_1pct_improvement
+     FROM `growth-ops-recruiting.growth_marketing_recruiting.TotalRevenueInfluencedandTotalGMVin2025`
+     ORDER BY month_start
+
+     Visualization: Combination chart - bars for GMV influenced, line for influence rate, annotation showing "opportunity zone"
+     Response:
+     [{
+  "month_start": "2025-01-01",
+  "gmv_influenced": "78081.34",
+  "total_gmv": "30500017.52",
+  "influence_rate_pct": "0.0025600423982969568",
+  "cumulative_influenced": "78081.34",
+  "mom_growth_pct": null,
+  "additional_gmv_per_1pct_improvement": "305000.0"
+}, {
+  "month_start": "2025-02-01",
+  "gmv_influenced": "213505.13",
+  "total_gmv": "34447183.44",
+  "influence_rate_pct": "0.0061980431693834945",
+  "cumulative_influenced": "291586.47000000003",
+  "mom_growth_pct": "173.4",
+  "additional_gmv_per_1pct_improvement": "344472.0"
+}, {
+  "month_start": "2025-03-01",
+  "gmv_influenced": "366045.62",
+  "total_gmv": "57395546.22",
+  "influence_rate_pct": "0.0063775963137789257",
+  "cumulative_influenced": "657632.09",
+  "mom_growth_pct": "71.4",
+  "additional_gmv_per_1pct_improvement": "573955.0"
+}, {
+  "month_start": "2025-04-01",
+  "gmv_influenced": "494673.23",
+  "total_gmv": "70967747.0",
+  "influence_rate_pct": "0.00697039500181806",
+  "cumulative_influenced": "1152305.32",
+  "mom_growth_pct": "35.1",
+  "additional_gmv_per_1pct_improvement": "709677.0"
+}, {
+  "month_start": "2025-05-01",
+  "gmv_influenced": "1250228.91",
+  "total_gmv": "101487978.2",
+  "influence_rate_pct": "0.012318985235359816",
+  "cumulative_influenced": "2402534.23",
+  "mom_growth_pct": "152.7",
+  "additional_gmv_per_1pct_improvement": "1014880.0"
+}, {
+  "month_start": "2025-06-01",
+  "gmv_influenced": "1677029.0",
+  "total_gmv": "71726642.8",
+  "influence_rate_pct": "0.023380837782637717",
+  "cumulative_influenced": "4079563.23",
+  "mom_growth_pct": "34.1",
+  "additional_gmv_per_1pct_improvement": "717266.0"
+}, {
+  "month_start": "2025-07-01",
+  "gmv_influenced": "3790241.05",
+  "total_gmv": "161646054.2",
+  "influence_rate_pct": "0.023447779611663121",
+  "cumulative_influenced": "7869804.2799999993",
+  "mom_growth_pct": "126.0",
+  "additional_gmv_per_1pct_improvement": "1616461.0"
+}, {
+  "month_start": "2025-08-01",
+  "gmv_influenced": "5501281.69",
+  "total_gmv": "282801163.22",
+  "influence_rate_pct": "0.01945282554838848",
+  "cumulative_influenced": "13371085.97",
+  "mom_growth_pct": "45.1",
+  "additional_gmv_per_1pct_improvement": "2828012.0"
+}, {
+  "month_start": "2025-09-01",
+  "gmv_influenced": "6257018.46",
+  "total_gmv": "351129323.99",
+  "influence_rate_pct": "0.017819697847737646",
+  "cumulative_influenced": "19628104.43",
+  "mom_growth_pct": "13.7",
+  "additional_gmv_per_1pct_improvement": "3511293.0"
+}, {
+  "month_start": "2025-10-01",
+  "gmv_influenced": "9266605.38",
+  "total_gmv": "470351213.57",
+  "influence_rate_pct": "0.019701459483317994",
+  "cumulative_influenced": "28894709.810000002",
+  "mom_growth_pct": "48.1",
+  "additional_gmv_per_1pct_improvement": "4703512.0"
+}, {
+  "month_start": "2025-11-01",
+  "gmv_influenced": "20732112.71",
+  "total_gmv": "1127168410.09",
+  "influence_rate_pct": "0.018393092397192196",
+  "cumulative_influenced": "49626822.52",
+  "mom_growth_pct": "123.7",
+  "additional_gmv_per_1pct_improvement": "11271684.0"
+}, {
+  "month_start": "2025-12-01",
+  "gmv_influenced": "9609075.67",
+  "total_gmv": "657234517.43",
+  "influence_rate_pct": "0.014620467142429977",
+  "cumulative_influenced": "59235898.190000005",
+  "mom_growth_pct": "-53.7",
+  "additional_gmv_per_1pct_improvement": "6572345.0"
+}]
+
+
+
+
+
+     ---
+     5.2 Channel ROI Comparison
+
+     Business Question: "Which support channels deliver the best return?"
+     Why Unique: Helps prioritize channel investments
+
+     -- Compare channel efficiency (volume per channel with assumed cost model)
+     WITH channel_metrics AS (
+       SELECT
+         channel,
+         SUM(support_inquiries) as total_volume,
+         CASE channel
+           WHEN 'chat' THEN 2.00  -- Live chat cost
+           WHEN 'email' THEN 3.00  -- Email handling cost
+           WHEN 'phone' THEN 8.00  -- Phone support cost
+           WHEN 'help-center' THEN 0.10  -- Self-service cost
+           WHEN 'contact_form' THEN 2.50
+           ELSE 1.50  -- Social/other
+         END as cost_per_inquiry
+       FROM `growth-ops-recruiting.growth_marketing_recruiting.SupportInquiriesbyIntentandChannel`
+       WHERE period >= DATE_SUB(CURRENT_DATE(), INTERVAL 30 DAY)
+       GROUP BY channel
+     )
+     SELECT
+       channel,
+       total_volume,
+       cost_per_inquiry,
+       ROUND(total_volume * cost_per_inquiry, 0) as estimated_monthly_cost,
+       ROUND(total_volume * 1.0 / (SELECT SUM(total_volume) FROM channel_metrics) * 100, 1) as volume_share_pct,
+       ROUND(total_volume * cost_per_inquiry / (SELECT SUM(total_volume * cost_per_inquiry) FROM channel_metrics) * 100, 1) as cost_share_pct
+     FROM channel_metrics
+     ORDER BY estimated_monthly_cost DESC
+
+     Visualization: Treemap showing volume vs cost, or paired bar chart comparing volume share vs cost share
+     Response:
+     [{
+  "channel": "email",
+  "total_volume": "7979432",
+  "cost_per_inquiry": "3.0",
+  "estimated_monthly_cost": "23938296.0",
+  "volume_share_pct": "68.6",
+  "cost_share_pct": "75.8"
+}, {
+  "channel": "chat",
+  "total_volume": "1054838",
+  "cost_per_inquiry": "2.0",
+  "estimated_monthly_cost": "2109676.0",
+  "volume_share_pct": "9.1",
+  "cost_share_pct": "6.7"
+}, {
+  "channel": "phone",
+  "total_volume": "260941",
+  "cost_per_inquiry": "8.0",
+  "estimated_monthly_cost": "2087528.0",
+  "volume_share_pct": "2.2",
+  "cost_share_pct": "6.6"
+}, {
+  "channel": "contact_form",
+  "total_volume": "683452",
+  "cost_per_inquiry": "2.5",
+  "estimated_monthly_cost": "1708630.0",
+  "volume_share_pct": "5.9",
+  "cost_share_pct": "5.4"
+}, {
+  "channel": "instagram",
+  "total_volume": "478935",
+  "cost_per_inquiry": "1.5",
+  "estimated_monthly_cost": "718403.0",
+  "volume_share_pct": "4.1",
+  "cost_share_pct": "2.3"
+}, {
+  "channel": "facebook",
+  "total_volume": "438594",
+  "cost_per_inquiry": "1.5",
+  "estimated_monthly_cost": "657891.0",
+  "volume_share_pct": "3.8",
+  "cost_share_pct": "2.1"
+}, {
+  "channel": "whatsapp",
+  "total_volume": "106861",
+  "cost_per_inquiry": "1.5",
+  "estimated_monthly_cost": "160292.0",
+  "volume_share_pct": "0.9",
+  "cost_share_pct": "0.5"
+}, {
+  "channel": "sms",
+  "total_volume": "76430",
+  "cost_per_inquiry": "1.5",
+  "estimated_monthly_cost": "114645.0",
+  "volume_share_pct": "0.7",
+  "cost_share_pct": "0.4"
+}, {
+  "channel": "help-center",
+  "total_volume": "524174",
+  "cost_per_inquiry": "0.1",
+  "estimated_monthly_cost": "52417.0",
+  "volume_share_pct": "4.5",
+  "cost_share_pct": "0.2"
+}, {
+  "channel": "tiktok",
+  "total_volume": "25680",
+  "cost_per_inquiry": "1.5",
+  "estimated_monthly_cost": "38520.0",
+  "volume_share_pct": "0.2",
+  "cost_share_pct": "0.1"
+}]
+
+
+
+     ---
+     EXECUTIVE SUMMARY DASHBOARD
+
+     Key Metrics (Unique to Our Dashboard)
+
+     | Metric   | What Periscope Shows | What We Show            |
+     |----------|----------------------|-------------------------|
+     | Tickets  | Volume count         | Savings from automation |
+     | CSAT     | Score by type        | CSAT risk alerts        |
+     | Handover | Rate percentage      | Cost of handovers       |
+     | GMV      | Influenced amount    | ROI per channel         |
+     | Quality  | Rate trend           | Merchant health scores  |
+
+     KPI Cards for Header
+
+     -- Single query to get all KPI summary values
+     SELECT
+       -- Automation Savings (YTD)
+       (SELECT ROUND(SUM(
+         CASE
+           WHEN handling_type IN ('fully_resolved', 'flows_fully_resolved') THEN tickets * 4.50
+           WHEN handling_type = 'ai_handover_to_human' THEN tickets * 1.50
+           ELSE 0
+         END
+       ), 0) FROM `growth-ops-recruiting.growth_marketing_recruiting.MonthlyTicketHandlingEvolutionsince2024`
+       WHERE EXTRACT(YEAR FROM month_start) = 2025) as ytd_savings,
+
+       -- Current AI Resolution Rate
+       (SELECT ROUND(success_rate_28 * 100, 1)
+        FROM `growth-ops-recruiting.growth_marketing_recruiting.AIAgentResolutionrate`
+        ORDER BY event_date DESC LIMIT 1) as current_resolution_rate,
+
+       -- CSAT Risk Count (intents declining)
+       (SELECT COUNT(*) FROM (
+         SELECT contact_reason FROM `growth-ops-recruiting.growth_marketing_recruiting.AIAgentCSATbyTicketIntentRolling7Day`
+         WHERE ticket_date >= DATE_SUB(CURRENT_DATE(), INTERVAL 7 DAY)
+         GROUP BY contact_reason
+         HAVING AVG(avg_score) < 4.0
+       )) as csat_risk_count,
+
+       -- GMV Influenced YTD
+       (SELECT ROUND(SUM(gmv_influenced), 0)
+        FROM `growth-ops-recruiting.growth_marketing_recruiting.TotalRevenueInfluencedandTotalGMVin2025`) as ytd_gmv_influenced,
+
+       -- Merchants Needing Attention
+       (SELECT COUNT(*) FROM `growth-ops-recruiting.growth_marketing_recruiting.GorgiasCustomersInteractionMetrics`
+        WHERE automation_rate_percent < 20) as merchants_at_risk

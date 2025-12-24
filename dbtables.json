@@ -1,0 +1,510 @@
+[{
+  "table_name": " MonthlyTicketEvolutionsince2024",
+  "column_name": "month_start",
+  "ordinal_position": "1",
+  "data_type": "DATE",
+  "is_nullable": "YES"
+}, {
+  "table_name": " MonthlyTicketEvolutionsince2024",
+  "column_name": "tickets",
+  "ordinal_position": "2",
+  "data_type": "INT64",
+  "is_nullable": "YES"
+}, {
+  "table_name": "AIAgentCSATbyTicketIntentRolling7Day",
+  "column_name": "ticket_date",
+  "ordinal_position": "1",
+  "data_type": "DATE",
+  "is_nullable": "YES"
+}, {
+  "table_name": "AIAgentCSATbyTicketIntentRolling7Day",
+  "column_name": "contact_reason",
+  "ordinal_position": "2",
+  "data_type": "STRING",
+  "is_nullable": "YES"
+}, {
+  "table_name": "AIAgentCSATbyTicketIntentRolling7Day",
+  "column_name": "rolling_avg_tickets",
+  "ordinal_position": "3",
+  "data_type": "FLOAT64",
+  "is_nullable": "YES"
+}, {
+  "table_name": "AIAgentCSATbyTicketIntentRolling7Day",
+  "column_name": "ticket_count",
+  "ordinal_position": "4",
+  "data_type": "INT64",
+  "is_nullable": "YES"
+}, {
+  "table_name": "AIAgentCSATbyTicketIntentRolling7Day",
+  "column_name": "avg_score",
+  "ordinal_position": "5",
+  "data_type": "FLOAT64",
+  "is_nullable": "YES"
+}, {
+  "table_name": "AIAgentResolutionrate",
+  "column_name": "event_date",
+  "ordinal_position": "1",
+  "data_type": "DATE",
+  "is_nullable": "YES"
+}, {
+  "table_name": "AIAgentResolutionrate",
+  "column_name": "success_rate_28",
+  "ordinal_position": "2",
+  "data_type": "FLOAT64",
+  "is_nullable": "YES"
+}, {
+  "table_name": "AIAgentResolutionrate",
+  "column_name": "coverage_rate_28",
+  "ordinal_position": "3",
+  "data_type": "FLOAT64",
+  "is_nullable": "YES"
+}, {
+  "table_name": "AIAgentResolutionrate",
+  "column_name": "rolling_closed_billed_28",
+  "ordinal_position": "4",
+  "data_type": "INT64",
+  "is_nullable": "YES"
+}, {
+  "table_name": "AIAgentResolutionrate",
+  "column_name": "rolling_ai_covered_28",
+  "ordinal_position": "5",
+  "data_type": "INT64",
+  "is_nullable": "YES"
+}, {
+  "table_name": "AIAgentResolutionrate",
+  "column_name": "rolling_total_tickets_28",
+  "ordinal_position": "6",
+  "data_type": "INT64",
+  "is_nullable": "YES"
+}, {
+  "table_name": "AIAgentResolutionratebyMerchantsandGMV",
+  "column_name": "event_date",
+  "ordinal_position": "1",
+  "data_type": "DATE",
+  "is_nullable": "YES"
+}, {
+  "table_name": "AIAgentResolutionratebyMerchantsandGMV",
+  "column_name": "fixed_gmv_parent_band",
+  "ordinal_position": "2",
+  "data_type": "STRING",
+  "is_nullable": "YES"
+}, {
+  "table_name": "AIAgentResolutionratebyMerchantsandGMV",
+  "column_name": "account_name",
+  "ordinal_position": "3",
+  "data_type": "STRING",
+  "is_nullable": "YES"
+}, {
+  "table_name": "AIAgentResolutionratebyMerchantsandGMV",
+  "column_name": "rolling_ai_covered_28",
+  "ordinal_position": "4",
+  "data_type": "INT64",
+  "is_nullable": "YES"
+}, {
+  "table_name": "AIAgentResolutionratebyMerchantsandGMV",
+  "column_name": "rolling_closed_billed_28",
+  "ordinal_position": "5",
+  "data_type": "INT64",
+  "is_nullable": "YES"
+}, {
+  "table_name": "AIAgentResolutionratebyMerchantsandGMV",
+  "column_name": "rolling_total_tickets_28",
+  "ordinal_position": "6",
+  "data_type": "INT64",
+  "is_nullable": "YES"
+}, {
+  "table_name": "AIAgentTicketHandovervsFullyAutomatedTickets",
+  "column_name": "month_start",
+  "ordinal_position": "1",
+  "data_type": "DATE",
+  "is_nullable": "YES"
+}, {
+  "table_name": "AIAgentTicketHandovervsFullyAutomatedTickets",
+  "column_name": "handover_tickets",
+  "ordinal_position": "2",
+  "data_type": "INT64",
+  "is_nullable": "YES"
+}, {
+  "table_name": "AIAgentTicketHandovervsFullyAutomatedTickets",
+  "column_name": "fully_automated_tickets",
+  "ordinal_position": "3",
+  "data_type": "INT64",
+  "is_nullable": "YES"
+}, {
+  "table_name": "AIAgentTicketHandovervsFullyAutomatedTickets",
+  "column_name": "total_ai_agent_tickets",
+  "ordinal_position": "4",
+  "data_type": "INT64",
+  "is_nullable": "YES"
+}, {
+  "table_name": "AIAgentTicketHandovervsFullyAutomatedTickets",
+  "column_name": "handover_percent",
+  "ordinal_position": "5",
+  "data_type": "FLOAT64",
+  "is_nullable": "YES"
+}, {
+  "table_name": "AIAgentTicketHandovervsFullyAutomatedTickets",
+  "column_name": "fully_automated_percent",
+  "ordinal_position": "6",
+  "data_type": "FLOAT64",
+  "is_nullable": "YES"
+}, {
+  "table_name": "CSATbyInteractionType",
+  "column_name": "month",
+  "ordinal_position": "1",
+  "data_type": "DATE",
+  "is_nullable": "YES"
+}, {
+  "table_name": "CSATbyInteractionType",
+  "column_name": "csat_human_resolved",
+  "ordinal_position": "2",
+  "data_type": "FLOAT64",
+  "is_nullable": "YES"
+}, {
+  "table_name": "CSATbyInteractionType",
+  "column_name": "count_human_resolved",
+  "ordinal_position": "3",
+  "data_type": "INT64",
+  "is_nullable": "YES"
+}, {
+  "table_name": "CSATbyInteractionType",
+  "column_name": "csat_all_ai_agent",
+  "ordinal_position": "4",
+  "data_type": "FLOAT64",
+  "is_nullable": "YES"
+}, {
+  "table_name": "CSATbyInteractionType",
+  "column_name": "count_all_ai_agent",
+  "ordinal_position": "5",
+  "data_type": "INT64",
+  "is_nullable": "YES"
+}, {
+  "table_name": "CSATbyInteractionType",
+  "column_name": "csat_ai_agent_fully_resolved",
+  "ordinal_position": "6",
+  "data_type": "FLOAT64",
+  "is_nullable": "YES"
+}, {
+  "table_name": "CSATbyInteractionType",
+  "column_name": "count_ai_agent_fully_resolved",
+  "ordinal_position": "7",
+  "data_type": "INT64",
+  "is_nullable": "YES"
+}, {
+  "table_name": "CSATbyInteractionType",
+  "column_name": "csat_flows_fully_resolved",
+  "ordinal_position": "8",
+  "data_type": "FLOAT64",
+  "is_nullable": "YES"
+}, {
+  "table_name": "CSATbyInteractionType",
+  "column_name": "count_flows_fully_resolved",
+  "ordinal_position": "9",
+  "data_type": "INT64",
+  "is_nullable": "YES"
+}, {
+  "table_name": "CSATbyTicketTypeforAIAgentMerchantsTicketLevel",
+  "column_name": "ticket_date",
+  "ordinal_position": "1",
+  "data_type": "DATE",
+  "is_nullable": "YES"
+}, {
+  "table_name": "CSATbyTicketTypeforAIAgentMerchantsTicketLevel",
+  "column_name": "ticket_type",
+  "ordinal_position": "2",
+  "data_type": "STRING",
+  "is_nullable": "YES"
+}, {
+  "table_name": "CSATbyTicketTypeforAIAgentMerchantsTicketLevel",
+  "column_name": "rolling_avg_tickets",
+  "ordinal_position": "3",
+  "data_type": "FLOAT64",
+  "is_nullable": "YES"
+}, {
+  "table_name": "CSATbyTicketTypeforAIAgentMerchantsTicketLevel",
+  "column_name": "ticket_count",
+  "ordinal_position": "4",
+  "data_type": "INT64",
+  "is_nullable": "YES"
+}, {
+  "table_name": "CSATbyTicketTypeforAIAgentMerchantsTicketLevel",
+  "column_name": "avg_score",
+  "ordinal_position": "5",
+  "data_type": "FLOAT64",
+  "is_nullable": "YES"
+}, {
+  "table_name": "DistinctIntent",
+  "column_name": "intent_lvl_1",
+  "ordinal_position": "1",
+  "data_type": "STRING",
+  "is_nullable": "YES"
+}, {
+  "table_name": "GorgiasCustomersInteractionMetrics",
+  "column_name": "account_name",
+  "ordinal_position": "1",
+  "data_type": "STRING",
+  "is_nullable": "YES"
+}, {
+  "table_name": "GorgiasCustomersInteractionMetrics",
+  "column_name": "quarter_label",
+  "ordinal_position": "2",
+  "data_type": "STRING",
+  "is_nullable": "YES"
+}, {
+  "table_name": "GorgiasCustomersInteractionMetrics",
+  "column_name": "total_interactions",
+  "ordinal_position": "3",
+  "data_type": "INT64",
+  "is_nullable": "YES"
+}, {
+  "table_name": "GorgiasCustomersInteractionMetrics",
+  "column_name": "automated_interactions",
+  "ordinal_position": "4",
+  "data_type": "INT64",
+  "is_nullable": "YES"
+}, {
+  "table_name": "GorgiasCustomersInteractionMetrics",
+  "column_name": "flows_interactions",
+  "ordinal_position": "5",
+  "data_type": "INT64",
+  "is_nullable": "YES"
+}, {
+  "table_name": "GorgiasCustomersInteractionMetrics",
+  "column_name": "ai_agent_interactions",
+  "ordinal_position": "6",
+  "data_type": "INT64",
+  "is_nullable": "YES"
+}, {
+  "table_name": "GorgiasCustomersInteractionMetrics",
+  "column_name": "human_interactions",
+  "ordinal_position": "7",
+  "data_type": "INT64",
+  "is_nullable": "YES"
+}, {
+  "table_name": "GorgiasCustomersInteractionMetrics",
+  "column_name": "automation_rate_percent",
+  "ordinal_position": "8",
+  "data_type": "FLOAT64",
+  "is_nullable": "YES"
+}, {
+  "table_name": "GorgiasCustomersInteractionMetrics",
+  "column_name": "avg_first_response_time_min",
+  "ordinal_position": "9",
+  "data_type": "FLOAT64",
+  "is_nullable": "YES"
+}, {
+  "table_name": "MerchantQualityRateGOODorOKRatedTicketsALLRatedTicketsRolling28d",
+  "column_name": "feedback_date",
+  "ordinal_position": "1",
+  "data_type": "DATE",
+  "is_nullable": "YES"
+}, {
+  "table_name": "MerchantQualityRateGOODorOKRatedTicketsALLRatedTicketsRolling28d",
+  "column_name": "good",
+  "ordinal_position": "2",
+  "data_type": "INT64",
+  "is_nullable": "YES"
+}, {
+  "table_name": "MerchantQualityRateGOODorOKRatedTicketsALLRatedTicketsRolling28d",
+  "column_name": "ok",
+  "ordinal_position": "3",
+  "data_type": "INT64",
+  "is_nullable": "YES"
+}, {
+  "table_name": "MerchantQualityRateGOODorOKRatedTicketsALLRatedTicketsRolling28d",
+  "column_name": "bad",
+  "ordinal_position": "4",
+  "data_type": "INT64",
+  "is_nullable": "YES"
+}, {
+  "table_name": "MerchantQualityRateGOODorOKRatedTicketsALLRatedTicketsRolling28d",
+  "column_name": "total",
+  "ordinal_position": "5",
+  "data_type": "INT64",
+  "is_nullable": "YES"
+}, {
+  "table_name": "MerchantQualityRateGOODorOKRatedTicketsALLRatedTicketsRolling28d",
+  "column_name": "merchant_quality_rate",
+  "ordinal_position": "6",
+  "data_type": "FLOAT64",
+  "is_nullable": "YES"
+}, {
+  "table_name": "MonthlyTicketEvolutionsince2024",
+  "column_name": "month_start",
+  "ordinal_position": "1",
+  "data_type": "DATE",
+  "is_nullable": "YES"
+}, {
+  "table_name": "MonthlyTicketEvolutionsince2024",
+  "column_name": "tickets",
+  "ordinal_position": "2",
+  "data_type": "INT64",
+  "is_nullable": "YES"
+}, {
+  "table_name": "MonthlyTicketHandlingEvolutionsince2024",
+  "column_name": "month_start",
+  "ordinal_position": "1",
+  "data_type": "DATE",
+  "is_nullable": "YES"
+}, {
+  "table_name": "MonthlyTicketHandlingEvolutionsince2024",
+  "column_name": "handling_type",
+  "ordinal_position": "2",
+  "data_type": "STRING",
+  "is_nullable": "YES"
+}, {
+  "table_name": "MonthlyTicketHandlingEvolutionsince2024",
+  "column_name": "tickets",
+  "ordinal_position": "3",
+  "data_type": "INT64",
+  "is_nullable": "YES"
+}, {
+  "table_name": "SupportInquiriesbyIntentandChannel",
+  "column_name": "period",
+  "ordinal_position": "1",
+  "data_type": "DATE",
+  "is_nullable": "YES"
+}, {
+  "table_name": "SupportInquiriesbyIntentandChannel",
+  "column_name": "channel",
+  "ordinal_position": "2",
+  "data_type": "STRING",
+  "is_nullable": "YES"
+}, {
+  "table_name": "SupportInquiriesbyIntentandChannel",
+  "column_name": "ticket_intent_lvl_1",
+  "ordinal_position": "3",
+  "data_type": "STRING",
+  "is_nullable": "YES"
+}, {
+  "table_name": "SupportInquiriesbyIntentandChannel",
+  "column_name": "support_inquiries",
+  "ordinal_position": "4",
+  "data_type": "INT64",
+  "is_nullable": "YES"
+}, {
+  "table_name": "TotalRevenueInfluencedandTotalGMVin2025",
+  "column_name": "month_start",
+  "ordinal_position": "1",
+  "data_type": "DATE",
+  "is_nullable": "YES"
+}, {
+  "table_name": "TotalRevenueInfluencedandTotalGMVin2025",
+  "column_name": "gmv_influenced",
+  "ordinal_position": "2",
+  "data_type": "FLOAT64",
+  "is_nullable": "YES"
+}, {
+  "table_name": "TotalRevenueInfluencedandTotalGMVin2025",
+  "column_name": "gmv_web",
+  "ordinal_position": "3",
+  "data_type": "FLOAT64",
+  "is_nullable": "YES"
+}, {
+  "table_name": "TotalRevenueInfluencedandTotalGMVin2025",
+  "column_name": "gmv_influenced_rate",
+  "ordinal_position": "4",
+  "data_type": "FLOAT64",
+  "is_nullable": "YES"
+}, {
+  "table_name": "contacts-tam",
+  "column_name": "contact_id",
+  "ordinal_position": "1",
+  "data_type": "INT64",
+  "is_nullable": "YES"
+}, {
+  "table_name": "contacts-tam",
+  "column_name": "associated_company_id",
+  "ordinal_position": "2",
+  "data_type": "INT64",
+  "is_nullable": "YES"
+}, {
+  "table_name": "contacts-tam",
+  "column_name": "first_name",
+  "ordinal_position": "3",
+  "data_type": "STRING",
+  "is_nullable": "YES"
+}, {
+  "table_name": "contacts-tam",
+  "column_name": "last_name",
+  "ordinal_position": "4",
+  "data_type": "STRING",
+  "is_nullable": "YES"
+}, {
+  "table_name": "contacts-tam",
+  "column_name": "email",
+  "ordinal_position": "5",
+  "data_type": "STRING",
+  "is_nullable": "YES"
+}, {
+  "table_name": "contacts-tam",
+  "column_name": "linkedin_profile",
+  "ordinal_position": "6",
+  "data_type": "STRING",
+  "is_nullable": "YES"
+}, {
+  "table_name": "contacts-tam",
+  "column_name": "contact_last_contacted",
+  "ordinal_position": "7",
+  "data_type": "TIMESTAMP",
+  "is_nullable": "YES"
+}, {
+  "table_name": "contacts-tam",
+  "column_name": "contact_score",
+  "ordinal_position": "8",
+  "data_type": "INT64",
+  "is_nullable": "YES"
+}, {
+  "table_name": "contacts-tam",
+  "column_name": "persona",
+  "ordinal_position": "9",
+  "data_type": "STRING",
+  "is_nullable": "YES"
+}]
+
+[{
+    "table_name": " MonthlyTicketEvolutionsince2024",
+    "schema_definition": "month_start DATE,tickets INT64"
+  }, {
+    "table_name": "AIAgentCSATbyTicketIntentRolling7Day",
+    "schema_definition": "ticket_date DATE,contact_reason STRING,rolling_avg_tickets FLOAT64,ticket_count INT64,avg_score FLOAT64"
+  }, {
+    "table_name": "AIAgentResolutionrate",
+    "schema_definition": "event_date DATE,success_rate_28 FLOAT64,coverage_rate_28 FLOAT64,rolling_closed_billed_28 INT64,rolling_ai_covered_28 INT64,rolling_total_tickets_28 INT64"
+  }, {
+    "table_name": "AIAgentResolutionratebyMerchantsandGMV",
+    "schema_definition": "event_date DATE,fixed_gmv_parent_band STRING,account_name STRING,rolling_ai_covered_28 INT64,rolling_closed_billed_28 INT64,rolling_total_tickets_28 INT64"
+  }, {
+    "table_name": "AIAgentTicketHandovervsFullyAutomatedTickets",
+    "schema_definition": "month_start DATE,handover_tickets INT64,fully_automated_tickets INT64,total_ai_agent_tickets INT64,handover_percent FLOAT64,fully_automated_percent FLOAT64"
+  }, {
+    "table_name": "CSATbyInteractionType",
+    "schema_definition": "month DATE,csat_human_resolved FLOAT64,count_human_resolved INT64,csat_all_ai_agent FLOAT64,count_all_ai_agent INT64,csat_ai_agent_fully_resolved FLOAT64,count_ai_agent_fully_resolved INT64,csat_flows_fully_resolved FLOAT64,count_flows_fully_resolved INT64"
+  }, {
+    "table_name": "CSATbyTicketTypeforAIAgentMerchantsTicketLevel",
+    "schema_definition": "ticket_date DATE,ticket_type STRING,rolling_avg_tickets FLOAT64,ticket_count INT64,avg_score FLOAT64"
+  }, {
+    "table_name": "DistinctIntent",
+    "schema_definition": "intent_lvl_1 STRING"
+  }, {
+    "table_name": "GorgiasCustomersInteractionMetrics",
+    "schema_definition": "account_name STRING,quarter_label STRING,total_interactions INT64,automated_interactions INT64,flows_interactions INT64,ai_agent_interactions INT64,human_interactions INT64,automation_rate_percent FLOAT64,avg_first_response_time_min FLOAT64"
+  }, {
+    "table_name": "MerchantQualityRateGOODorOKRatedTicketsALLRatedTicketsRolling28d",
+    "schema_definition": "feedback_date DATE,good INT64,ok INT64,bad INT64,total INT64,merchant_quality_rate FLOAT64"
+  }, {
+    "table_name": "MonthlyTicketEvolutionsince2024",
+    "schema_definition": "month_start DATE,tickets INT64"
+  }, {
+    "table_name": "MonthlyTicketHandlingEvolutionsince2024",
+    "schema_definition": "month_start DATE,handling_type STRING,tickets INT64"
+  }, {
+    "table_name": "SupportInquiriesbyIntentandChannel",
+    "schema_definition": "period DATE,channel STRING,ticket_intent_lvl_1 STRING,support_inquiries INT64"
+  }, {
+    "table_name": "TotalRevenueInfluencedandTotalGMVin2025",
+    "schema_definition": "month_start DATE,gmv_influenced FLOAT64,gmv_web FLOAT64,gmv_influenced_rate FLOAT64"
+  }, {
+    "table_name": "contacts-tam",
+    "schema_definition": "contact_id INT64,associated_company_id INT64,first_name STRING,last_name STRING,email STRING,linkedin_profile STRING,contact_last_contacted TIMESTAMP,contact_score INT64,persona STRING"
+  }]

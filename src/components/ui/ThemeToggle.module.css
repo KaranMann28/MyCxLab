@@ -1,0 +1,42 @@
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 50%;
+  cursor: pointer;
+  color: white;
+  transition: background 0.2s ease;
+}
+
+:global(.dark) .button {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.button:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+:global(.dark) .button:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+}
+
+@media (max-width: 500px) {
+  .button {
+    width: 32px;
+    height: 32px;
+  }
+
+  .icon {
+    width: 18px;
+    height: 18px;
+  }
+}

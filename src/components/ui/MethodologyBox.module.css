@@ -1,0 +1,12 @@
+.methodology {
+  background: var(--color-info-bg);
+  padding: 1.5rem;
+  border-radius: var(--radius-md);
+  margin-top: 1rem;
+  font-size: 0.9rem;
+}
+
+.title {
+  color: var(--color-info);
+  margin-bottom: 0.5rem;
+}

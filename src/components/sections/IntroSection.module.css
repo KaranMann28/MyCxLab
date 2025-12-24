@@ -1,0 +1,16 @@
+.intro {
+  margin-bottom: 2rem;
+}
+
+.title {
+  color: var(--color-primary);
+  margin-bottom: 1rem;
+}
+
+.intro p {
+  margin-bottom: 0;
+}
+
+.intro p + p {
+  margin-top: 1rem;
+}

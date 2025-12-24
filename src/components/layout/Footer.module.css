@@ -1,0 +1,25 @@
+.footer {
+  color: white;
+  padding: 2rem;
+  text-align: center;
+  margin-top: auto;
+}
+
+.mainText {
+  margin-bottom: 0.5rem;
+}
+
+.contactText {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.link {
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.link:hover {
+  opacity: 0.8;
+}

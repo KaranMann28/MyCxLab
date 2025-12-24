@@ -1,0 +1,45 @@
+.button {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  z-index: 50;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+  color: white;
+  cursor: pointer;
+  box-shadow: var(--shadow-lg);
+  transition: box-shadow 0.2s ease;
+}
+
+.button:hover {
+  box-shadow: 0 10px 24px rgba(102, 126, 234, 0.4);
+}
+
+:global(.dark) .button:hover {
+  box-shadow: 0 10px 24px rgba(124, 140, 250, 0.3);
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+}
+
+@media (max-width: 500px) {
+  .button {
+    bottom: 20px;
+    right: 20px;
+    width: 44px;
+    height: 44px;
+  }
+
+  .icon {
+    width: 20px;
+    height: 20px;
+  }
+}
